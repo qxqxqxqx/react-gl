@@ -45,4 +45,4 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 # react-gl
 
-build webgl app by using threejs in react
+Build webgl app by using threejs && react

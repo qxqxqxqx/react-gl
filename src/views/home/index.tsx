@@ -1,5 +1,6 @@
 import React, {ReactElement} from 'react';
 import {Layout, Menu, Breadcrumb} from 'antd';
+import PlanGeometry from './components/PlanGeometry';
 
 import './style.scss'
 
@@ -22,9 +23,11 @@ export default function Home():ReactElement {
           <Breadcrumb.Item>List</Breadcrumb.Item>
           <Breadcrumb.Item>App</Breadcrumb.Item>
         </Breadcrumb>
-        <div className="site-layout-content">Content</div>
+        <div className="site-layout-content">
+          <PlanGeometry />
+        </div>
       </Content>
-      <Footer style={{textAlign: 'center'}}>Ant Design ©2018 Created by Ant UED</Footer>
+      <Footer style={{textAlign: 'center'}}>React Gl ©2020 Created by qxqxqxqx</Footer>
     </Layout>
   );
 }
