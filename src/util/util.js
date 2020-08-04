@@ -148,7 +148,7 @@ export const applyMeshStandardMaterial = function (geometry, material) {
  * @param {*} material if provided use this meshnormal material instead of creating a new material
  *                     this material will only be used if it is a meshnormal material.
  */
-const applyMeshNormalMaterial = function (geometry, material) {
+export const applyMeshNormalMaterial = function (geometry, material) {
   if (!material || material.type !== 'MeshNormalMaterial') {
     material = new THREE.MeshNormalMaterial();
     material.side = THREE.DoubleSide;
@@ -448,7 +448,7 @@ export function addBasicMaterialSettings(gui, controls, material, name) {
   folder.add(controls.material, 'name');
   folder.add(controls.material, 'opacity', 0, 1, 0.01);
   folder.add(controls.material, 'transparent');
-  folder.add(controls.material, 'overdraw', 0, 1, 0.01);
+  // folder.add(controls.material, 'overdraw', 0, 1, 0.01);
   folder.add(controls.material, 'visible');
   folder.add(controls.material, 'side', {FrontSide: 0, BackSide: 1, BothSides: 2}).onChange(function (side) {
     controls.material.side = parseInt(side);

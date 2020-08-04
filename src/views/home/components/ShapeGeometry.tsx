@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import * as dat from 'dat.gui';
 import { initRenderer, initCamera, addLargeGroundPlane, initDefaultLighting, applyMeshNormalMaterial, applyMeshStandardMaterial, redrawGeometryAndUpdateUI } from '../../../util/util.js';
 
-export default class PlanGeometry extends Component<any, any> {
+export default class ShapeGeometry extends Component<any, any> {
   private wrapRef: React.RefObject<HTMLDivElement>;
   private gui: dat.GUI;
   public constructor(props: any) {
@@ -23,55 +23,77 @@ export default class PlanGeometry extends Component<any, any> {
     this.gui.destroy()
   }
 
+
   /**
    * init
    */
   public init() {
     if (this.wrapRef.current) {
       const wrap: HTMLDivElement = this.wrapRef.current;
+      // init renderer
       const renderer = initRenderer(wrap, undefined);
+      // init camera
       const camera = initCamera(wrap, undefined);
+      // init scene
       const scene = new THREE.Scene();
+      // add axes helper
       // const axes = new THREE.AxesHelper(20);
       // scene.add(axes);
+      // add ground plane
       const groundPlane = addLargeGroundPlane(scene, undefined);
       groundPlane.position.y = -30;
+      // add light
       initDefaultLighting(scene, undefined);
-      // geometry
-      // const planeGeometry = new THREE.PlaneGeometry(20, 20, 4, 4);
-      // // material
-      // const standardMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
-      // standardMaterial.side = THREE.DoubleSide;
-      // const normalMaterial = new THREE.MeshNormalMaterial();
-      // normalMaterial.side = THREE.DoubleSide;
-      // const createMultiMaterialObject = (geometry: any, materials: any) => {
 
-      //   var group = new THREE.Group();
+      const drawShape = () => {
 
-      //   for (let i = 0, l = materials.length; i < l; i++) {
+        // create a basic shape
+        const shape = new THREE.Shape();
 
-      //     group.add(new THREE.Mesh(geometry, materials[i]));
+        // startpoint
+        shape.moveTo(10, 10);
 
-      //   }
+        // straight line upwards
+        shape.lineTo(10, 40);
 
-      //   return group;
+        // the top of the figure, curve to the right
+        shape.bezierCurveTo(15, 25, 25, 25, 30, 40);
 
-      // }
-      // const plane = createMultiMaterialObject(planeGeometry, [standardMaterial,
-      //   normalMaterial
-      // ]);
-      // const plane = new THREE.Mesh(planeGeometry, normalMaterial);
-      // plane.castShadow = true;
-      // scene.add(plane);
+        // spline back down
+        shape.splineThru(
+          [new THREE.Vector2(32, 30),
+          new THREE.Vector2(28, 20),
+          new THREE.Vector2(30, 10),
+          ]);
+
+        // curve at the bottom
+        shape.quadraticCurveTo(20, 15, 10, 10);
+
+        // add 'eye' hole one
+        const hole1 = new THREE.Path();
+        hole1.absellipse(16, 24, 2, 3, 0, Math.PI * 2, true, 0);
+        shape.holes.push(hole1);
+
+        // add 'eye hole 2'
+        const hole2 = new THREE.Path();
+        hole2.absellipse(23, 24, 2, 3, 0, Math.PI * 2, true, 0);
+        shape.holes.push(hole2);
+
+        // add 'mouth'
+        const hole3 = new THREE.Path();
+        hole3.absarc(20, 16, 2, 0, Math.PI, true);
+        shape.holes.push(hole3);
+
+        // return the shape
+        return shape;
+      }
+
+
       interface Controls {
         // members of your "class" go here
         castShadow: boolean,
         groundPlaneVisible: boolean,
-        planeGeometry: THREE.PlaneGeometry,
-        width: number,
-        height: number,
-        widthSegments: number,
-        heightSegments: number,
+        curveSegments: number,
         appliedMaterial: typeof applyMeshNormalMaterial,
         redraw: any,
         mesh: any
@@ -79,29 +101,25 @@ export default class PlanGeometry extends Component<any, any> {
       const self = this;
       const Controls = function (this: Controls) {
 
+        this.curveSegments = 12;
+
         // the start geometry and material. Used as the base for the settings in the control UI
         this.appliedMaterial = applyMeshNormalMaterial
         this.castShadow = true;
         this.groundPlaneVisible = true;
 
-        this.planeGeometry = new THREE.PlaneGeometry(20, 20, 4, 4);
-        this.width = this.planeGeometry.parameters.width;
-        this.height = this.planeGeometry.parameters.height;
-        this.widthSegments = this.planeGeometry.parameters.widthSegments;
-        this.heightSegments = this.planeGeometry.parameters.heightSegments;
-
         // redraw function, updates the control UI and recreates the geometry.
         this.redraw = function () {
           redrawGeometryAndUpdateUI(self.gui, scene, controls, function () {
-            return new THREE.PlaneGeometry(controls.width, controls.height, Math.round(controls.widthSegments), Math.round(controls.heightSegments));
+            return new THREE.ShapeGeometry(drawShape(), controls.curveSegments).center();
           });
         };
       } as any as { new(): Controls; };;
       const controls = new Controls();
-      this.gui.add(controls, 'width', 0, 40).onChange(controls.redraw);
-      this.gui.add(controls, 'height', 0, 40).onChange(controls.redraw);
-      this.gui.add(controls, 'widthSegments', 0, 10).onChange(controls.redraw);
-      this.gui.add(controls, 'heightSegments', 0, 10).onChange(controls.redraw);
+      // create the GUI with the specific settings for this geometry
+      
+      this.gui.add(controls, 'curveSegments', 1, 100, 1).onChange(controls.redraw);
+
       // add a material section, so we can switch between materials
       this.gui.add(controls, 'appliedMaterial', {
         meshNormal: applyMeshNormalMaterial,
@@ -110,8 +128,10 @@ export default class PlanGeometry extends Component<any, any> {
 
       this.gui.add(controls, 'castShadow').onChange(function (e) { controls.mesh.castShadow = e })
       this.gui.add(controls, 'groundPlaneVisible').onChange(function (e) { groundPlane.material.visible = e })
+
       // initialize the first redraw so everything gets initialized
       controls.redraw();
+      // render and animation
       let step = 0.1;
       const render = () => {
         controls.mesh.rotation.y = step += 0.01
@@ -122,7 +142,7 @@ export default class PlanGeometry extends Component<any, any> {
       }
       render();
     }
-    
+
   }
 
   render() {
