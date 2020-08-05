@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
-import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
-import PlanGeometry from './components/PlanGeometry';
-import CircleGeometry from './components/CircleGeometry';
-import RingGeometry from './components/RingGeometry';
-import ShapeGeometry from './components/ShapeGeometry';
+import { SettingOutlined } from '@ant-design/icons';
+import PlanGeometry from './twod/PlanGeometry';
+import CircleGeometry from './twod/CircleGeometry';
+import RingGeometry from './twod/RingGeometry';
+import ShapeGeometry from './twod/ShapeGeometry';
+import BoxGeometry from './threed/BoxGeometry';
+import SphereGeometry from './threed/SphereGeometry';
+import CylinderGeometry from './threed/CylinderGeometry';
+import ConeGeometry from './threed/ConeGeometry';
+import TorusGeometry from './threed/TorusGeometry';
+import TorusKnotGeometry from './threed/TorusKnotGeometry';
+import PolyhedronGeometry from './threed/PolyhedronGeometry';
 
 import './style.scss'
 
@@ -15,15 +22,32 @@ export default function Home(): JSX.Element{
   // any 大法好
   const [geo, setGeo] = useState<any>('PlanGeometry');
   const twoGeo: string[] = [PlanGeometry.name, CircleGeometry.name, RingGeometry.name, ShapeGeometry.name];
-  interface twoComponentsConfig {
+  const threeGeo: string[] = [
+    BoxGeometry.name, 
+    SphereGeometry.name, 
+    CylinderGeometry.name, 
+    ConeGeometry.name, 
+    TorusGeometry.name, 
+    TorusKnotGeometry.name,
+    PolyhedronGeometry.name
+  ];
+  interface componentsConfig {
     [key:string]: any
   }
-  const twoComponents: twoComponentsConfig = {
+  const components: componentsConfig = {
     'PlanGeometry': <PlanGeometry />,
     'CircleGeometry': <CircleGeometry />,
     'RingGeometry': <RingGeometry />,
     'ShapeGeometry': <ShapeGeometry />,
+    'BoxGeometry': <BoxGeometry />,
+    'SphereGeometry': <SphereGeometry />,
+    'CylinderGeometry': <CylinderGeometry />,
+    'ConeGeometry': <ConeGeometry />,
+    'TorusGeometry': <TorusGeometry />,
+    'TorusKnotGeometry': <TorusKnotGeometry />,
+    'PolyhedronGeometry': <PolyhedronGeometry />
   }
+
   return (
     <Layout className="layout">
       <Header>
@@ -36,8 +60,13 @@ export default function Home(): JSX.Element{
               ))
             }
           </SubMenu>
-          <Menu.Item key="2">nav 2</Menu.Item>
-          <Menu.Item key="3">nav 3</Menu.Item>
+          <SubMenu icon={<SettingOutlined />} title="三维图形">
+            {
+              threeGeo.map(n => (
+                <Menu.Item key={n}>{n}</Menu.Item>
+              ))
+            }
+          </SubMenu>
         </Menu>
       </Header>
       <Content style={{ padding: '0 50px' }}>
@@ -46,7 +75,7 @@ export default function Home(): JSX.Element{
           <Breadcrumb.Item>{geo}</Breadcrumb.Item>
         </Breadcrumb>
         <div className="site-layout-content">
-          {twoComponents[geo]}
+          {components[geo]}
         </div>
       </Content>
       <Footer style={{ textAlign: 'center' }}>React Gl ©2020 Created by qxqxqxqx</Footer>
