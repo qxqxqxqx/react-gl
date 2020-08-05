@@ -12,27 +12,32 @@ import ConeGeometry from './threed/ConeGeometry';
 import TorusGeometry from './threed/TorusGeometry';
 import TorusKnotGeometry from './threed/TorusKnotGeometry';
 import PolyhedronGeometry from './threed/PolyhedronGeometry';
+import ConvexGeometryBox from './advanced/ConvexGeometryBox';
+import LatheGeometry from './advanced/LatheGeometry';
+import ExtrudeGeometry from './advanced/ExtrudeGeometry';
+import TubeGeometry from './advanced/TubeGeometry';
 
 import './style.scss'
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer } = Layout;
 
-export default function Home(): JSX.Element{
+export default function Home(): JSX.Element {
   // any 大法好
   const [geo, setGeo] = useState<any>('PlanGeometry');
   const twoGeo: string[] = [PlanGeometry.name, CircleGeometry.name, RingGeometry.name, ShapeGeometry.name];
   const threeGeo: string[] = [
-    BoxGeometry.name, 
-    SphereGeometry.name, 
-    CylinderGeometry.name, 
-    ConeGeometry.name, 
-    TorusGeometry.name, 
+    BoxGeometry.name,
+    SphereGeometry.name,
+    CylinderGeometry.name,
+    ConeGeometry.name,
+    TorusGeometry.name,
     TorusKnotGeometry.name,
     PolyhedronGeometry.name
   ];
+  const advancedGeo: string[] = [ConvexGeometryBox.name, LatheGeometry.name, ExtrudeGeometry.name, TubeGeometry.name];
   interface componentsConfig {
-    [key:string]: any
+    [key: string]: any
   }
   const components: componentsConfig = {
     'PlanGeometry': <PlanGeometry />,
@@ -45,7 +50,11 @@ export default function Home(): JSX.Element{
     'ConeGeometry': <ConeGeometry />,
     'TorusGeometry': <TorusGeometry />,
     'TorusKnotGeometry': <TorusKnotGeometry />,
-    'PolyhedronGeometry': <PolyhedronGeometry />
+    'PolyhedronGeometry': <PolyhedronGeometry />,
+    'ConvexGeometryBox': <ConvexGeometryBox />,
+    'LatheGeometry': <LatheGeometry />,
+    'ExtrudeGeometry': <ExtrudeGeometry />,
+    'TubeGeometry': <TubeGeometry />
   }
 
   return (
@@ -63,6 +72,13 @@ export default function Home(): JSX.Element{
           <SubMenu icon={<SettingOutlined />} title="三维图形">
             {
               threeGeo.map(n => (
+                <Menu.Item key={n}>{n}</Menu.Item>
+              ))
+            }
+          </SubMenu>
+          <SubMenu icon={<SettingOutlined />} title="高级几何体">
+            {
+              advancedGeo.map(n => (
                 <Menu.Item key={n}>{n}</Menu.Item>
               ))
             }
