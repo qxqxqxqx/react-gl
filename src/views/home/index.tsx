@@ -23,6 +23,7 @@ import TubeGeometry from './advanced/TubeGeometry';
 import ExtrudeSvg from './advanced/ExtrudeSvg';
 import ParametricGeometry from './advanced/ParametricGeometry';
 import TextGeometry from './advanced/TextGeometry';
+import ThreeBSP from './advanced/ThreeBSP';
 
 import './style.scss'
 
@@ -47,7 +48,8 @@ export default function Home(): JSX.Element {
     TubeGeometry.name, 
     ExtrudeSvg.name,
     ParametricGeometry.name,
-    TextGeometry.name
+    TextGeometry.name,
+    ThreeBSP.name
   ];
   interface componentsConfig {
     [key: string]: any
@@ -70,7 +72,8 @@ export default function Home(): JSX.Element {
     'TubeGeometry': <TubeGeometry />,
     'ExtrudeSvg': <ExtrudeSvg />,
     'ParametricGeometry': <ParametricGeometry />,
-    'TextGeometry': <TextGeometry />
+    'TextGeometry': <TextGeometry />,
+    'ThreeBSP': <ThreeBSP />
   }
   let history = useHistory();
   const handleMenuClick = (type: any):void => {
