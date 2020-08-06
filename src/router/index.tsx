@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-07-30 13:52:58
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-07-30 14:10:27
+ * @LastEditTime: 2020-08-06 11:42:38
  * @Description: 路由入口
  */ 
 import React, { ReactElement } from 'react';
@@ -19,7 +19,7 @@ export default function BaseRouter(): ReactElement{
         <Route exact path="/">
           <App />
         </Route>
-        <Route exact path="/home">
+        <Route exact path="/home/:type">
           <Home />
         </Route>
       </Switch>

@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
+import {useHistory, useParams} from "react-router-dom";
+
 import PlanGeometry from './twod/PlanGeometry';
 import CircleGeometry from './twod/CircleGeometry';
 import RingGeometry from './twod/RingGeometry';
 import ShapeGeometry from './twod/ShapeGeometry';
+
 import BoxGeometry from './threed/BoxGeometry';
 import SphereGeometry from './threed/SphereGeometry';
 import CylinderGeometry from './threed/CylinderGeometry';
@@ -12,10 +15,14 @@ import ConeGeometry from './threed/ConeGeometry';
 import TorusGeometry from './threed/TorusGeometry';
 import TorusKnotGeometry from './threed/TorusKnotGeometry';
 import PolyhedronGeometry from './threed/PolyhedronGeometry';
+
 import ConvexGeometryBox from './advanced/ConvexGeometryBox';
 import LatheGeometry from './advanced/LatheGeometry';
 import ExtrudeGeometry from './advanced/ExtrudeGeometry';
 import TubeGeometry from './advanced/TubeGeometry';
+import ExtrudeSvg from './advanced/ExtrudeSvg';
+import ParametricGeometry from './advanced/ParametricGeometry';
+import TextGeometry from './advanced/TextGeometry';
 
 import './style.scss'
 
@@ -23,8 +30,6 @@ const { SubMenu } = Menu;
 const { Header, Content, Footer } = Layout;
 
 export default function Home(): JSX.Element {
-  // any 大法好
-  const [geo, setGeo] = useState<any>('PlanGeometry');
   const twoGeo: string[] = [PlanGeometry.name, CircleGeometry.name, RingGeometry.name, ShapeGeometry.name];
   const threeGeo: string[] = [
     BoxGeometry.name,
@@ -35,7 +40,15 @@ export default function Home(): JSX.Element {
     TorusKnotGeometry.name,
     PolyhedronGeometry.name
   ];
-  const advancedGeo: string[] = [ConvexGeometryBox.name, LatheGeometry.name, ExtrudeGeometry.name, TubeGeometry.name];
+  const advancedGeo: string[] = [
+    ConvexGeometryBox.name, 
+    LatheGeometry.name, 
+    ExtrudeGeometry.name, 
+    TubeGeometry.name, 
+    ExtrudeSvg.name,
+    ParametricGeometry.name,
+    TextGeometry.name
+  ];
   interface componentsConfig {
     [key: string]: any
   }
@@ -54,14 +67,25 @@ export default function Home(): JSX.Element {
     'ConvexGeometryBox': <ConvexGeometryBox />,
     'LatheGeometry': <LatheGeometry />,
     'ExtrudeGeometry': <ExtrudeGeometry />,
-    'TubeGeometry': <TubeGeometry />
+    'TubeGeometry': <TubeGeometry />,
+    'ExtrudeSvg': <ExtrudeSvg />,
+    'ParametricGeometry': <ParametricGeometry />,
+    'TextGeometry': <TextGeometry />
   }
+  let history = useHistory();
+  const handleMenuClick = (type: any):void => {
+
+    history.replace(`/home/${type}`)
+
+  }
+
+  let { type } = useParams();
 
   return (
     <Layout className="layout">
       <Header>
         <div className="logo">React Webgl</div>
-        <Menu theme="dark" mode="horizontal" selectedKeys={[geo]} onClick={i => setGeo(i.key)}>
+        <Menu theme="dark" mode="horizontal" selectedKeys={[type]} onClick={i => handleMenuClick(i.key)}>
           <SubMenu icon={<SettingOutlined />} title="二维图形">
             {
               twoGeo.map(n => (
@@ -88,10 +112,10 @@ export default function Home(): JSX.Element {
       <Content style={{ padding: '0 50px' }}>
         <Breadcrumb style={{ margin: '16px 0' }}>
           <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>{geo}</Breadcrumb.Item>
+          <Breadcrumb.Item>{type}</Breadcrumb.Item>
         </Breadcrumb>
         <div className="site-layout-content">
-          {components[geo]}
+          {components[type]}
         </div>
       </Content>
       <Footer style={{ textAlign: 'center' }}>React Gl ©2020 Created by qxqxqxqx</Footer>
