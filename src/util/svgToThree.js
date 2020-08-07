@@ -3,9 +3,10 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-06 10:08:12
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-06 10:31:10
+ * @LastEditTime: 2020-08-07 17:08:01
  * @Description: svg 路径转换成three.js图形
  */
+/* eslint-disable */ 
 import * as THREE from 'three';
 
 const DEGS_TO_RADS = Math.PI / 180,

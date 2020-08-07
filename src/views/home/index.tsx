@@ -25,6 +25,10 @@ import ParametricGeometry from './advanced/ParametricGeometry';
 import TextGeometry from './advanced/TextGeometry';
 import ThreeBSP from './advanced/ThreeBSP';
 
+import Spirit from './spirit/Spirit';
+import Points from './spirit/Points';
+import Particles from './spirit/Particles';
+
 import './style.scss'
 
 const { SubMenu } = Menu;
@@ -51,6 +55,11 @@ export default function Home(): JSX.Element {
     TextGeometry.name,
     ThreeBSP.name
   ];
+  const spirits: string[] =[
+    Spirit.name,
+    Points.name,
+    Particles.name
+  ];
   interface componentsConfig {
     [key: string]: any
   }
@@ -73,7 +82,10 @@ export default function Home(): JSX.Element {
     'ExtrudeSvg': <ExtrudeSvg />,
     'ParametricGeometry': <ParametricGeometry />,
     'TextGeometry': <TextGeometry />,
-    'ThreeBSP': <ThreeBSP />
+    'ThreeBSP': <ThreeBSP />,
+    'Spirit': <Spirit />,
+    'Points': <Points />,
+    'Particles': <Particles />
   }
   let history = useHistory();
   const handleMenuClick = (type: any):void => {
@@ -110,6 +122,13 @@ export default function Home(): JSX.Element {
               ))
             }
           </SubMenu>
+          <SubMenu icon={<SettingOutlined />} title="粒子与精灵">
+            {
+              spirits.map(n => (
+                <Menu.Item key={n}>{n}</Menu.Item>
+              ))
+            }
+          </SubMenu>
         </Menu>
       </Header>
       <Content style={{ padding: '0 50px' }}>
@@ -118,7 +137,7 @@ export default function Home(): JSX.Element {
           <Breadcrumb.Item>{type}</Breadcrumb.Item>
         </Breadcrumb>
         <div className="site-layout-content">
-          {components[type]}
+          {type && components[type]}
         </div>
       </Content>
       <Footer style={{ textAlign: 'center' }}>React Gl ©2020 Created by qxqxqxqx</Footer>

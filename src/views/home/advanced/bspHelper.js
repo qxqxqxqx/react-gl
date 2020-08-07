@@ -1,3 +1,4 @@
+/* eslint-disable */ 
 import ThreeBSP from '../../../util/ThreeBSP';
 
 export default (result, sphere1, sphere2, cube, controls, scene) => {
