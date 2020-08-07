@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-07 17:19:29
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-07 17:48:20
+ * @LastEditTime: 2020-08-07 18:33:39
  * @Description: 粒子云
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -44,7 +44,7 @@ export default function Particles(props: any): ReactElement {
         sizeAttenuation: boolean,
         colorValue: any,
         vertexColorValue: any
-      ) => {
+      ):void => {
         const geom = new THREE.Geometry();
         const material = new THREE.PointsMaterial({
           size: size,
@@ -55,8 +55,8 @@ export default function Particles(props: any): ReactElement {
           color: new THREE.Color(colorValue)
         });
         const range = 500;
-        for (var i = 0; i < 15000; i++) {
-          var particle = new THREE.Vector3(Math.random() * range - range / 2, Math.random() * range - range / 2,
+        for (let i = 0; i < 15000; i++) {
+          const particle = new THREE.Vector3(Math.random() * range - range / 2, Math.random() * range - range / 2,
             Math.random() * range - range / 2);
           geom.vertices.push(particle);
           const color = new THREE.Color(vertexColorValue);

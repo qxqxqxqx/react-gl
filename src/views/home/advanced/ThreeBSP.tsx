@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-06 17:07:22
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-06 20:08:28
+ * @LastEditTime: 2020-08-07 18:34:47
  * @Description: 三维几何体之间结合成新的几何体
  */
 import React, { Component } from "react";
@@ -125,7 +125,6 @@ export default class ThreeBSP extends Component<any, any> {
         showResult: () => void,
         mesh: any
       }
-      const self = this;
       const Controls = function (this: Controls) {
 
         this.sphere1PosX = sphere1.position.x;

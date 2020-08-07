@@ -3,13 +3,20 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-05 17:00:38
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-05 17:24:19
+ * @LastEditTime: 2020-08-07 18:35:52
  * @Description: 二维图形沿z轴拉伸成三维
  */
 import React, { Component } from "react";
 import * as THREE from 'three';
 import * as dat from 'dat.gui';
-import { initRenderer, initCamera, addLargeGroundPlane, initDefaultLighting, applyMeshNormalMaterial, applyMeshStandardMaterial, redrawGeometryAndUpdateUI } from '../../../util/util.js';
+import { 
+  initRenderer, 
+  initCamera, addLargeGroundPlane, 
+  initDefaultLighting, 
+  applyMeshNormalMaterial, 
+  applyMeshStandardMaterial, 
+  redrawGeometryAndUpdateUI 
+} from '../../../util/util.js';
 
 export default class ExtrudeGeometry extends Component<any, any> {
   private wrapRef: React.RefObject<HTMLDivElement>;
@@ -168,11 +175,9 @@ export default class ExtrudeGeometry extends Component<any, any> {
       // render and animation
       let step = 0;
       const render = () => {
-        // controls.mesh.rotation.y = step += 0.005
-        // controls.mesh.rotation.x = step
-        // controls.mesh.rotation.z = step
-
-       
+        controls.mesh.rotation.y = step += 0.005
+        controls.mesh.rotation.x = step
+        controls.mesh.rotation.z = step       
         requestAnimationFrame(render);
         renderer.render(scene, camera);
       }
