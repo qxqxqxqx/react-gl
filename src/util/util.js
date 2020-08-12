@@ -1,7 +1,9 @@
-/* eslint-disable */ 
+/* eslint-disable */
+
 import * as THREE from 'three';
 // import Stats from './Stats';
 import TrackballControls from './TrackballControls';
+import {CanvasRenderer} from './CanvasRenderer';
 /**
  * Initialize the statistics domelement
  *
@@ -42,11 +44,11 @@ export function initRenderer(wrapper, additionalProperties) {
  * Initialize a simple default canvas renderer.
  *
  */
-export function initCanvasRenderer() {
-  const canvasRenderer = new THREE.CanvasRenderer();
+export function initCanvasRenderer(wrapper) {
+  const canvasRenderer = new CanvasRenderer();
   canvasRenderer.setClearColor(new THREE.Color(0x000000));
-  canvasRenderer.setSize(window.innerWidth, window.innerHeight);
-  document.getElementById('webgl-output').appendChild(canvasRenderer.domElement);
+  canvasRenderer.setSize(wrapper.clientWidth, wrapper.clientHeight);
+  wrapper.appendChild(canvasRenderer.domElement);
 
   return canvasRenderer;
 }
@@ -113,17 +115,17 @@ export function initDefaultDirectionalLighting(scene, initialPosition) {
  * @param {THREE.Renderer} renderer
  */
 export function initTrackballControls(camera, renderer) {
-    const trackballControls = new TrackballControls(camera, renderer.domElement);
-    trackballControls.rotateSpeed = 1.0;
-    trackballControls.zoomSpeed = 1.2;
-    trackballControls.panSpeed = 0.8;
-    trackballControls.noZoom = false;
-    trackballControls.noPan = false;
-    trackballControls.staticMoving = true;
-    trackballControls.dynamicDampingFactor = 0.3;
-    trackballControls.keys = [65, 83, 68];
+  const trackballControls = new TrackballControls(camera, renderer.domElement);
+  trackballControls.rotateSpeed = 1.0;
+  trackballControls.zoomSpeed = 1.2;
+  trackballControls.panSpeed = 0.8;
+  trackballControls.noZoom = false;
+  trackballControls.noPan = false;
+  trackballControls.staticMoving = true;
+  trackballControls.dynamicDampingFactor = 0.3;
+  trackballControls.keys = [65, 83, 68];
 
-    return trackballControls;
+  return trackballControls;
 }
 
 /**

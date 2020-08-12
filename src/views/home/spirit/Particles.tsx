@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-07 17:19:29
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-07 18:33:39
+ * @LastEditTime: 2020-08-10 14:12:34
  * @Description: 粒子云
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -47,11 +47,11 @@ export default function Particles(props: any): ReactElement {
       ):void => {
         const geom = new THREE.Geometry();
         const material = new THREE.PointsMaterial({
-          size: size,
-          transparent: transparent,
-          opacity: opacity,
-          vertexColors: vertexColors,
-          sizeAttenuation: sizeAttenuation,
+          size,
+          transparent,
+          opacity,
+          vertexColors,
+          sizeAttenuation,
           color: new THREE.Color(colorValue)
         });
         const range = 500;

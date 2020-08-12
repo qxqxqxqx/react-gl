@@ -28,6 +28,9 @@ import ThreeBSP from './advanced/ThreeBSP';
 import Spirit from './spirit/Spirit';
 import Points from './spirit/Points';
 import Particles from './spirit/Particles';
+import TextureParticles from './spirit/TextureParticles';
+import MultiTextureParticles from "./spirit/MultiTextureParticles";
+import TextureSpirit from './spirit/TextureSpirit';
 
 import './style.scss'
 
@@ -58,7 +61,10 @@ export default function Home(): JSX.Element {
   const spirits: string[] =[
     Spirit.name,
     Points.name,
-    Particles.name
+    Particles.name,
+    TextureParticles.name,
+    MultiTextureParticles.name,
+    TextureSpirit.name
   ];
   interface componentsConfig {
     [key: string]: any
@@ -85,7 +91,10 @@ export default function Home(): JSX.Element {
     'ThreeBSP': <ThreeBSP />,
     'Spirit': <Spirit />,
     'Points': <Points />,
-    'Particles': <Particles />
+    'Particles': <Particles />,
+    'TextureParticles': <TextureParticles />,
+    'MultiTextureParticles': <MultiTextureParticles />,
+    'TextureSpirit': <TextureSpirit />
   }
   let history = useHistory();
   const handleMenuClick = (type: any):void => {
