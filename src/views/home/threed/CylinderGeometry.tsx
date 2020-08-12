@@ -1,7 +1,15 @@
 import React, { Component } from "react";
 import * as THREE from 'three';
 import * as dat from 'dat.gui';
-import { initRenderer, initCamera, addLargeGroundPlane, initDefaultLighting, applyMeshNormalMaterial, applyMeshStandardMaterial, redrawGeometryAndUpdateUI } from '../../../util/util.js';
+import { 
+  initRenderer, 
+  initCamera, 
+  addLargeGroundPlane, 
+  initDefaultLighting, 
+  applyMeshNormalMaterial, 
+  applyMeshStandardMaterial, 
+  redrawGeometryAndUpdateUI 
+} from '../../../util/util.js';
 
 export default class CylinderGeometry extends Component<any, any> {
   private wrapRef: React.RefObject<HTMLDivElement>;
@@ -87,6 +95,7 @@ export default class CylinderGeometry extends Component<any, any> {
         };
       } as any as { new(): Controls; };;
       const controls = new Controls();
+      
       // create the GUI with the specific settings for this geometry
 
       this.gui.add(controls, 'radiusTop', -40, 40).onChange(controls.redraw);

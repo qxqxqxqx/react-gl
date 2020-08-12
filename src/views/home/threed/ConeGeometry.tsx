@@ -3,13 +3,21 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-05 11:39:11
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-05 11:44:21
+ * @LastEditTime: 2020-08-12 13:46:18
  * @Description: 圆锥体
  */
 import React, { Component } from "react";
 import * as THREE from 'three';
 import * as dat from 'dat.gui';
-import { initRenderer, initCamera, addLargeGroundPlane, initDefaultLighting, applyMeshNormalMaterial, applyMeshStandardMaterial, redrawGeometryAndUpdateUI } from '../../../util/util.js';
+import { 
+  initRenderer, 
+  initCamera, 
+  addLargeGroundPlane, 
+  initDefaultLighting, 
+  applyMeshNormalMaterial, 
+  applyMeshStandardMaterial, 
+  redrawGeometryAndUpdateUI 
+} from '../../../util/util.js';
 
 export default class ConeGeometry extends Component<any, any> {
   private wrapRef: React.RefObject<HTMLDivElement>;

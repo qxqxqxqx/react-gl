@@ -3,13 +3,21 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-05 13:37:34
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-05 13:50:03
+ * @LastEditTime: 2020-08-12 13:43:41
  * @Description: 环状纽结
  */
 import React, { Component } from "react";
 import * as THREE from 'three';
 import * as dat from 'dat.gui';
-import { initRenderer, initCamera, addLargeGroundPlane, initDefaultLighting, applyMeshNormalMaterial, applyMeshStandardMaterial, redrawGeometryAndUpdateUI } from '../../../util/util.js';
+import { 
+  initRenderer, 
+  initCamera, 
+  addLargeGroundPlane, 
+  initDefaultLighting, 
+  applyMeshNormalMaterial, 
+  applyMeshStandardMaterial, 
+  redrawGeometryAndUpdateUI 
+} from '../../../util/util.js';
 
 export default class TorusKnotGeometry extends Component<any, any> {
   private wrapRef: React.RefObject<HTMLDivElement>;

@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-12 10:24:33
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-12 10:59:50
+ * @LastEditTime: 2020-08-12 13:51:02
  * @Description: 三维空间中定位粒子时使用精灵贴图 
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -74,11 +74,11 @@ export default function TextureSprites(props: any): ReactElement {
           map: texture
         });
         // we have 1 row, with five sprites
-        /**       v
+        /**       ^ v
          *        |
          *        |————|————|————|————|————|
          *        | 😊   😈   😍  😋   😄 
-         * -------|————|————|————|————|————|----u
+         * -------|————|————|————|————|————|---->u
          *        |
          *        |
          *        |

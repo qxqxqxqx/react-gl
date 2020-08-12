@@ -1,7 +1,15 @@
 import React, { Component } from "react";
 import * as THREE from 'three';
 import * as dat from 'dat.gui';
-import { initRenderer, initCamera, addLargeGroundPlane, initDefaultLighting, applyMeshNormalMaterial, applyMeshStandardMaterial, redrawGeometryAndUpdateUI } from '../../../util/util.js';
+import { 
+  initRenderer, 
+  initCamera, 
+  addLargeGroundPlane, 
+  initDefaultLighting, 
+  applyMeshNormalMaterial, 
+  applyMeshStandardMaterial, 
+  redrawGeometryAndUpdateUI 
+} from '../../../util/util.js';
 
 export default class PlanGeometry extends Component<any, any> {
   private wrapRef: React.RefObject<HTMLDivElement>;

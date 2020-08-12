@@ -3,13 +3,21 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-05 13:18:40
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-05 13:24:36
+ * @LastEditTime: 2020-08-12 13:44:49
  * @Description: 环状结构
  */
 import React, { Component } from "react";
 import * as THREE from 'three';
 import * as dat from 'dat.gui';
-import { initRenderer, initCamera, addLargeGroundPlane, initDefaultLighting, applyMeshNormalMaterial, applyMeshStandardMaterial, redrawGeometryAndUpdateUI } from '../../../util/util.js';
+import { 
+  initRenderer, 
+  initCamera, 
+  addLargeGroundPlane, 
+  initDefaultLighting, 
+  applyMeshNormalMaterial, 
+  applyMeshStandardMaterial, 
+  redrawGeometryAndUpdateUI 
+} from '../../../util/util.js';
 
 export default class TorusGeometry extends Component<any, any> {
   private wrapRef: React.RefObject<HTMLDivElement>;
