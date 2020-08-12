@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-11 19:36:58
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-11 20:15:00
+ * @LastEditTime: 2020-08-12 11:23:11
  * @Description: 使用精灵贴图做纹理
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -12,13 +12,13 @@ import * as dat from 'dat.gui';
 import { initRenderer, initCamera } from '../../../util/util.js';
 import spriteSheet from '../../../assets/textures/particles/sprite-sheet.png';
 
-export default function TextureSpirit(props: any): ReactElement {
+export default function TextureSprite(props: any): ReactElement {
 
   const wrapRef = useRef(null);
   useEffect(() => {
     const gui = new dat.GUI();
     if (wrapRef.current) {
-      const wrap:any = wrapRef.current;
+      const wrap: any = wrapRef.current;
       // init renderer
       const webGLRenderer = initRenderer(wrap, undefined);
       // init camera
@@ -50,42 +50,42 @@ export default function TextureSpirit(props: any): ReactElement {
         img.onload = function () {
           const canvas = document.createElement('canvas');
           const context = canvas.getContext('2d');
-          canvas.width = 512;
-          canvas.height = 128;
+          const { width, height } = img;
+          canvas.width = width;
+          canvas.height = height;
           if (context) {
-            context.drawImage(img, 0, 0, 512, 128, 0, 0, 512, 128);
+            context.drawImage(img, 0, 0, width, height, 0, 0, width, height);
           }
           texture.image = canvas;
           texture.format = THREE.RGBAFormat;
           texture.needsUpdate = true;
         }
-        const spriteMaterial:any= new THREE.SpriteMaterial({
+        const spriteMaterial: any = new THREE.SpriteMaterial({
           opacity: opacity,
           color: color,
           transparent: transparent,
           map: texture
         });
-
         // we have 1 row, with five sprites
         /**       v
          *        |
-         *        |
-         *        |
-         * -------|-----------------------------u
+         *        |————|————|————|————|————|
+         *        | 😊   😈   😍  😋   😄
+         * -------|————|————|————|————|————|----u
          *        |
          *        |
          *        |
          * map.offset 决定纹理在x轴上的偏移量     (0-1)
          * map.repeat 决定放大比例 1/5           (0-1)
-         * 
-         */ 
+         *
+         */
         spriteMaterial.map.offset = new THREE.Vector2(0.2 * spriteNumber, 0);
         spriteMaterial.map.repeat = new THREE.Vector2(1 / 5, 1);
         spriteMaterial.blending = THREE.AdditiveBlending;
         // make sure the object is always rendered at the front
         spriteMaterial.depthTest = false;
 
-        const sprite:any = new THREE.Sprite(spriteMaterial);
+        const sprite: any = new THREE.Sprite(spriteMaterial);
         sprite.scale.set(size, size, size);
         sprite.position.set(100, 50, -10);
         sprite.velocityX = 5;
@@ -115,7 +115,7 @@ export default function TextureSpirit(props: any): ReactElement {
         this.rotateSystem = true;
 
         this.redraw = function () {
-          sceneOrtho.children.forEach(function (child:any) {
+          sceneOrtho.children.forEach(function (child: any) {
             if (child instanceof THREE.Sprite) sceneOrtho.remove(child);
           });
           createSprite(controls.size, controls.transparent, controls.opacity, controls.color, controls.sprite);
@@ -130,14 +130,13 @@ export default function TextureSpirit(props: any): ReactElement {
       controls.redraw();
 
       interface SuperSprite extends THREE.Sprite {
-        velocityX:number,
+        velocityX: number,
         material: any
       }
 
       let step = 0;
       const render = (): void => {
         camera.position.y = Math.sin(step += 0.01) * 20;
-
         sceneOrtho.children.forEach(function (e: SuperSprite) {
           if (e instanceof THREE.Sprite) {
             // move the sprite along the bottom

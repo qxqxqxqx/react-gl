@@ -25,12 +25,14 @@ import ParametricGeometry from './advanced/ParametricGeometry';
 import TextGeometry from './advanced/TextGeometry';
 import ThreeBSP from './advanced/ThreeBSP';
 
-import Spirit from './spirit/Spirit';
-import Points from './spirit/Points';
-import Particles from './spirit/Particles';
-import TextureParticles from './spirit/TextureParticles';
-import MultiTextureParticles from "./spirit/MultiTextureParticles";
-import TextureSpirit from './spirit/TextureSpirit';
+import Spirit from './spirite/Spirit';
+import Points from './spirite/Points';
+import Particles from './spirite/Particles';
+import TextureParticles from './spirite/TextureParticles';
+import MultiTextureParticles from "./spirite/MultiTextureParticles";
+import TextureSprite from './spirite/TextureSprite';
+import TextureSprites from "./spirite/TextureSprites";
+import TorusKnotPoints from './spirite/TorusKnotPoints';
 
 import './style.scss'
 
@@ -64,7 +66,9 @@ export default function Home(): JSX.Element {
     Particles.name,
     TextureParticles.name,
     MultiTextureParticles.name,
-    TextureSpirit.name
+    TextureSprite.name,
+    TextureSprites.name,
+    TorusKnotPoints.name
   ];
   interface componentsConfig {
     [key: string]: any
@@ -94,7 +98,9 @@ export default function Home(): JSX.Element {
     'Particles': <Particles />,
     'TextureParticles': <TextureParticles />,
     'MultiTextureParticles': <MultiTextureParticles />,
-    'TextureSpirit': <TextureSpirit />
+    'TextureSprite': <TextureSprite />,
+    'TextureSprites': <TextureSprites />,
+    'TorusKnotPoints': <TorusKnotPoints />
   }
   let history = useHistory();
   const handleMenuClick = (type: any):void => {
