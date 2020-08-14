@@ -35,6 +35,7 @@ import TextureSprites from "./spirite/TextureSprites";
 import TorusKnotPoints from './spirite/TorusKnotPoints';
 
 import Group from './advancedGeo/Group';
+import MergeGeometry from './advancedGeo/MergeGeometry';
 
 import './style.scss'
 
@@ -73,7 +74,8 @@ export default function Home(): JSX.Element {
     TorusKnotPoints.name
   ];
   const advancedGeos : string[] = [
-    Group.name
+    Group.name,
+    MergeGeometry.name
   ]
   interface componentsConfig {
     [key: string]: any
@@ -106,7 +108,8 @@ export default function Home(): JSX.Element {
     'TextureSprite': <TextureSprite />,
     'TextureSprites': <TextureSprites />,
     'TorusKnotPoints': <TorusKnotPoints />,
-    'Group': <Group />
+    'Group': <Group />,
+    'MergeGeometry': <MergeGeometry />,
   }
   let history = useHistory();
   const handleMenuClick = (type: any):void => {
