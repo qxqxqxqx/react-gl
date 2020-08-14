@@ -66,8 +66,6 @@ export default class CircleGeometry extends Component<any, any> {
       }
       const self = this;
       const Controls = function (this: Controls) {
-
-        // the start geometry and material. Used as the base for the settings in the control UI
         // the start geometry and material. Used as the base for the settings in the control UI
         this.appliedMaterial = applyMeshNormalMaterial
         this.castShadow = true;

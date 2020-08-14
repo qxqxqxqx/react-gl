@@ -34,6 +34,8 @@ import TextureSprite from './spirite/TextureSprite';
 import TextureSprites from "./spirite/TextureSprites";
 import TorusKnotPoints from './spirite/TorusKnotPoints';
 
+import Group from './advancedGeo/Group';
+
 import './style.scss'
 
 const { SubMenu } = Menu;
@@ -70,6 +72,9 @@ export default function Home(): JSX.Element {
     TextureSprites.name,
     TorusKnotPoints.name
   ];
+  const advancedGeos : string[] = [
+    Group.name
+  ]
   interface componentsConfig {
     [key: string]: any
   }
@@ -100,7 +105,8 @@ export default function Home(): JSX.Element {
     'MultiTextureParticles': <MultiTextureParticles />,
     'TextureSprite': <TextureSprite />,
     'TextureSprites': <TextureSprites />,
-    'TorusKnotPoints': <TorusKnotPoints />
+    'TorusKnotPoints': <TorusKnotPoints />,
+    'Group': <Group />
   }
   let history = useHistory();
   const handleMenuClick = (type: any):void => {
@@ -140,6 +146,13 @@ export default function Home(): JSX.Element {
           <SubMenu icon={<SettingOutlined />} title="粒子与精灵">
             {
               spirits.map(n => (
+                <Menu.Item key={n}>{n}</Menu.Item>
+              ))
+            }
+          </SubMenu>
+          <SubMenu icon={<SettingOutlined />} title="创建加载高级网格和几何体">
+            {
+              advancedGeos.map(n => (
                 <Menu.Item key={n}>{n}</Menu.Item>
               ))
             }
