@@ -36,6 +36,9 @@ import TorusKnotPoints from './spirite/TorusKnotPoints';
 
 import Group from './advancedGeo/Group';
 import MergeGeometry from './advancedGeo/MergeGeometry';
+import SaveLoadMesh from './advancedGeo/SaveLoadMesh';
+import SaveLoadScene from './advancedGeo/SaveLoadScene';
+import House from './advancedGeo/House';
 
 import './style.scss'
 
@@ -75,7 +78,10 @@ export default function Home(): JSX.Element {
   ];
   const advancedGeos : string[] = [
     Group.name,
-    MergeGeometry.name
+    MergeGeometry.name,
+    SaveLoadMesh.name,
+    SaveLoadScene.name,
+    House.name
   ]
   interface componentsConfig {
     [key: string]: any
@@ -110,6 +116,9 @@ export default function Home(): JSX.Element {
     'TorusKnotPoints': <TorusKnotPoints />,
     'Group': <Group />,
     'MergeGeometry': <MergeGeometry />,
+    'SaveLoadMesh': <SaveLoadMesh/>,
+    'SaveLoadScene': <SaveLoadScene />,
+    'House': <House />
   }
   let history = useHistory();
   const handleMenuClick = (type: any):void => {

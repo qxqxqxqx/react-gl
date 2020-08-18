@@ -1,0 +1,251 @@
+{
+  "metadata": {
+    "version": 4.5,
+    "type": "Object",
+    "generator": "Object3D.toJSON"
+  },
+  "geometries": [
+    {
+      "uuid": "5701AD4E-AA73-41BF-BF0F-001D70A002B8",
+      "type": "PlaneGeometry",
+      "width": 60,
+      "height": 20,
+      "widthSegments": 1,
+      "heightSegments": 1
+    },
+    {
+      "uuid": "2EE800EC-9321-418B-89D0-180314FEC082",
+      "type": "BoxGeometry",
+      "width": 4,
+      "height": 4,
+      "depth": 4
+    },
+    {
+      "uuid": "CC64AE3F-82ED-436A-86D7-5BD6323D3D25",
+      "type": "SphereGeometry",
+      "radius": 4,
+      "widthSegments": 20,
+      "heightSegments": 20
+    }
+  ],
+  "materials": [
+    {
+      "uuid": "5FA1143C-9F71-470C-9676-255B0E9BAFD0",
+      "type": "MeshLambertMaterial",
+      "color": 16777215,
+      "emissive": 0,
+      "depthFunc": 3,
+      "depthTest": true,
+      "depthWrite": true,
+      "stencilWrite": false,
+      "stencilWriteMask": 255,
+      "stencilFunc": 519,
+      "stencilRef": 0,
+      "stencilFuncMask": 255,
+      "stencilFail": 7680,
+      "stencilZFail": 7680,
+      "stencilZPass": 7680
+    },
+    {
+      "uuid": "1826BCC1-D346-4457-9564-A39C3D6F9855",
+      "type": "MeshLambertMaterial",
+      "color": 16711680,
+      "emissive": 0,
+      "depthFunc": 3,
+      "depthTest": true,
+      "depthWrite": true,
+      "stencilWrite": false,
+      "stencilWriteMask": 255,
+      "stencilFunc": 519,
+      "stencilRef": 0,
+      "stencilFuncMask": 255,
+      "stencilFail": 7680,
+      "stencilZFail": 7680,
+      "stencilZPass": 7680
+    },
+    {
+      "uuid": "A69177D1-10C7-4C9D-B374-4835DEA39847",
+      "type": "MeshLambertMaterial",
+      "color": 7829503,
+      "emissive": 0,
+      "depthFunc": 3,
+      "depthTest": true,
+      "depthWrite": true,
+      "stencilWrite": false,
+      "stencilWriteMask": 255,
+      "stencilFunc": 519,
+      "stencilRef": 0,
+      "stencilFuncMask": 255,
+      "stencilFail": 7680,
+      "stencilZFail": 7680,
+      "stencilZPass": 7680
+    }
+  ],
+  "object": {
+    "uuid": "E9D6BF94-73E9-48AA-BD35-1CC19F647824",
+    "type": "Scene",
+    "layers": 1,
+    "matrix": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "children": [
+      {
+        "uuid": "A8D807DF-68E9-42BB-A262-8D557F105DAE",
+        "type": "Mesh",
+        "layers": 1,
+        "matrix": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          2.220446049250313e-16,
+          -1,
+          0,
+          0,
+          1,
+          2.220446049250313e-16,
+          0,
+          15,
+          0,
+          0,
+          1
+        ],
+        "geometry": "5701AD4E-AA73-41BF-BF0F-001D70A002B8",
+        "material": "5FA1143C-9F71-470C-9676-255B0E9BAFD0"
+      },
+      {
+        "uuid": "F7ED3235-6AE2-4F55-9A77-45CD19669A94",
+        "type": "Mesh",
+        "layers": 1,
+        "matrix": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          -4,
+          3,
+          0,
+          1
+        ],
+        "geometry": "2EE800EC-9321-418B-89D0-180314FEC082",
+        "material": "1826BCC1-D346-4457-9564-A39C3D6F9855"
+      },
+      {
+        "uuid": "6F2FE8CA-B7C3-4951-9F54-C6EBA3B37C6B",
+        "type": "Mesh",
+        "layers": 1,
+        "matrix": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          20,
+          0,
+          2,
+          1
+        ],
+        "geometry": "CC64AE3F-82ED-436A-86D7-5BD6323D3D25",
+        "material": "A69177D1-10C7-4C9D-B374-4835DEA39847"
+      },
+      {
+        "uuid": "337C5099-9873-413E-996D-A30B40DB1095",
+        "type": "AmbientLight",
+        "layers": 1,
+        "matrix": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "color": 789516,
+        "intensity": 1
+      },
+      {
+        "uuid": "0355B81C-8A16-4DCC-BB48-D2AEC95DB787",
+        "type": "PointLight",
+        "layers": 1,
+        "matrix": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          -40,
+          60,
+          -10,
+          1
+        ],
+        "color": 16777215,
+        "intensity": 1,
+        "distance": 0,
+        "decay": 1,
+        "shadow": {
+          "camera": {
+            "uuid": "A252EC78-E16D-460F-A1F6-D547E18CF838",
+            "type": "PerspectiveCamera",
+            "layers": 1,
+            "fov": 90,
+            "zoom": 1,
+            "near": 0.5,
+            "far": 500,
+            "focus": 10,
+            "aspect": 1,
+            "filmGauge": 35,
+            "filmOffset": 0
+          }
+        }
+      }
+    ]
+  }
+}

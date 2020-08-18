@@ -21,5 +21,12 @@
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "src/assets"
+  ],
+  "types": [
+    "babylonjs",
+    "babylonjs-loaders"
   ]
 }
