@@ -40,6 +40,10 @@ import SaveLoadMesh from './advancedGeo/SaveLoadMesh';
 import SaveLoadScene from './advancedGeo/SaveLoadScene';
 import House from './advancedGeo/House';
 import OBJLoad from './advancedGeo/OBJLoad';
+import MTLLoad from './advancedGeo/MTLLoad';
+import ColladaLoad from './advancedGeo/ColladaLoad';
+import PDBLoad from './advancedGeo/PDBLoad';
+import PLYLoad from './advancedGeo/PLYLoad';
 
 import './style.scss'
 
@@ -83,7 +87,11 @@ export default function Home(): JSX.Element {
     SaveLoadMesh.name,
     SaveLoadScene.name,
     House.name,
-    OBJLoad.name
+    OBJLoad.name,
+    MTLLoad.name,
+    ColladaLoad.name,
+    PDBLoad.name,
+    PLYLoad.name
   ]
   interface componentsConfig {
     [key: string]: any
@@ -121,7 +129,11 @@ export default function Home(): JSX.Element {
     'SaveLoadMesh': <SaveLoadMesh/>,
     'SaveLoadScene': <SaveLoadScene />,
     'House': <House />,
-    'OBJLoad': <OBJLoad />
+    'OBJLoad': <OBJLoad />,
+    'MTLLoad': <MTLLoad />,
+    'ColladaLoad': <ColladaLoad />,
+    'PDBLoad': <PDBLoad />,
+    'PLYLoad': <PLYLoad />
   }
   let history = useHistory();
   const handleMenuClick = (type: any):void => {
