@@ -1,33 +1,33 @@
 /**
- * Simple base class, which setups a simple scene which is used to 
+ * Simple base class, which setups a simple scene which is used to
  * demonstrate the different loaders. This create a scene, three
  * lights, and slowly rotates the model, around the z-axis
  */
 import * as THREE from 'three';
+import {initRenderer, initTrackballControls} from '../../../util/util.js';
 
-export default function BaseLoaderScene(providedCamera, shouldAddLights, shouldRotate, updateMesh) {
-
-  self = this;
+export default function BaseLoaderScene(wrap, providedCamera, shouldAddLights, shouldRotate, updateMesh) {
+  const self = this;
 
   // setup some default elements
   this.scene = new THREE.Scene();
-  this.stats = initStats();
+  // this.stats = initStats();
   this.clock = new THREE.Clock();
   this.camera = providedCamera;
-  this.withLights = (shouldAddLights !== undefined) ? shouldAddLights : true;
-  this.shouldRotate = (shouldRotate !== undefined) ? shouldRotate : true;
-  this.updateMesh = updateMesh
+  this.withLights = shouldAddLights !== undefined ? shouldAddLights : true;
+  this.shouldRotate = shouldRotate !== undefined ? shouldRotate : true;
+  this.updateMesh = updateMesh;
 
   // initialize basic renderer
-  this.renderer = initRenderer({
-    antialias: true
+  this.renderer = initRenderer(wrap, {
+    antialias: true,
   });
 
   this.trackballControls = initTrackballControls(this.camera, this.renderer);
 
   /**
    * Start the render loop of the provided object
-   * 
+   *
    * @param {Three.Object3D} mesh render this mesh or object
    * @param {*} camera render using the provided camera settings
    */
@@ -36,31 +36,31 @@ export default function BaseLoaderScene(providedCamera, shouldAddLights, shouldR
     self.camera = camera;
     self.mesh = mesh;
     self._render();
-  }
+  };
 
   /**
    * Interal function, called continously to render the scene
    */
   this._render = function () {
-    self.stats.update();
+    // self.stats.update();
     requestAnimationFrame(self._render);
     self.trackballControls.update(self.clock.getDelta());
 
-    if (updateMesh) this.updateMesh(self.mesh)
+    if (updateMesh) this.updateMesh(self.mesh);
 
     if (shouldRotate) {
-      self.mesh.rotation.z += 0.01
+      self.mesh.rotation.z += 0.01;
     }
 
     self.renderer.render(self.scene, self.camera);
-  }
+  };
 
   /**
    * Internal function, which adds a number of lights to the scene.
    */
   this._addLights = function () {
     var keyLight = new THREE.SpotLight(0xffffff);
-    keyLight.position.set(00, 80, 80);
+    keyLight.position.set(0, 80, 80);
     keyLight.intensity = 2;
     keyLight.lookAt(new THREE.Vector3(0, 15, 0));
     keyLight.castShadow = true;
@@ -79,9 +79,8 @@ export default function BaseLoaderScene(providedCamera, shouldAddLights, shouldR
     backlight2.intensity = 0.5;
     backlight2.lookAt(new THREE.Vector3(0, 15, 0));
     this.scene.add(backlight2);
-  }
+  };
 
   // add the lights
   if (this.withLights) this._addLights();
-
 }

@@ -39,6 +39,7 @@ import MergeGeometry from './advancedGeo/MergeGeometry';
 import SaveLoadMesh from './advancedGeo/SaveLoadMesh';
 import SaveLoadScene from './advancedGeo/SaveLoadScene';
 import House from './advancedGeo/House';
+import OBJLoad from './advancedGeo/OBJLoad';
 
 import './style.scss'
 
@@ -81,7 +82,8 @@ export default function Home(): JSX.Element {
     MergeGeometry.name,
     SaveLoadMesh.name,
     SaveLoadScene.name,
-    House.name
+    House.name,
+    OBJLoad.name
   ]
   interface componentsConfig {
     [key: string]: any
@@ -118,7 +120,8 @@ export default function Home(): JSX.Element {
     'MergeGeometry': <MergeGeometry />,
     'SaveLoadMesh': <SaveLoadMesh/>,
     'SaveLoadScene': <SaveLoadScene />,
-    'House': <House />
+    'House': <House />,
+    'OBJLoad': <OBJLoad />
   }
   let history = useHistory();
   const handleMenuClick = (type: any):void => {
