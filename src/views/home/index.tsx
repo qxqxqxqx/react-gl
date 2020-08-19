@@ -1,198 +1,56 @@
 import React from 'react';
+import { renderRoutes } from "react-router-config";
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
-import {useHistory, useParams} from "react-router-dom";
-
-import PlanGeometry from './twod/PlanGeometry';
-import CircleGeometry from './twod/CircleGeometry';
-import RingGeometry from './twod/RingGeometry';
-import ShapeGeometry from './twod/ShapeGeometry';
-
-import BoxGeometry from './threed/BoxGeometry';
-import SphereGeometry from './threed/SphereGeometry';
-import CylinderGeometry from './threed/CylinderGeometry';
-import ConeGeometry from './threed/ConeGeometry';
-import TorusGeometry from './threed/TorusGeometry';
-import TorusKnotGeometry from './threed/TorusKnotGeometry';
-import PolyhedronGeometry from './threed/PolyhedronGeometry';
-
-import ConvexGeometryBox from './advanced/ConvexGeometryBox';
-import LatheGeometry from './advanced/LatheGeometry';
-import ExtrudeGeometry from './advanced/ExtrudeGeometry';
-import TubeGeometry from './advanced/TubeGeometry';
-import ExtrudeSvg from './advanced/ExtrudeSvg';
-import ParametricGeometry from './advanced/ParametricGeometry';
-import TextGeometry from './advanced/TextGeometry';
-import ThreeBSP from './advanced/ThreeBSP';
-
-import Spirit from './spirite/Spirit';
-import Points from './spirite/Points';
-import Particles from './spirite/Particles';
-import TextureParticles from './spirite/TextureParticles';
-import MultiTextureParticles from "./spirite/MultiTextureParticles";
-import TextureSprite from './spirite/TextureSprite';
-import TextureSprites from "./spirite/TextureSprites";
-import TorusKnotPoints from './spirite/TorusKnotPoints';
-
-import Group from './advancedGeo/Group';
-import MergeGeometry from './advancedGeo/MergeGeometry';
-import SaveLoadMesh from './advancedGeo/SaveLoadMesh';
-import SaveLoadScene from './advancedGeo/SaveLoadScene';
-import House from './advancedGeo/House';
-import OBJLoad from './advancedGeo/OBJLoad';
-import MTLLoad from './advancedGeo/MTLLoad';
-import ColladaLoad from './advancedGeo/ColladaLoad';
-import PDBLoad from './advancedGeo/PDBLoad';
-import PLYLoad from './advancedGeo/PLYLoad';
 
 import './style.scss'
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer } = Layout;
 
-export default function Home(): JSX.Element {
-  const twoGeo: string[] = [PlanGeometry.name, CircleGeometry.name, RingGeometry.name, ShapeGeometry.name];
-  const threeGeo: string[] = [
-    BoxGeometry.name,
-    SphereGeometry.name,
-    CylinderGeometry.name,
-    ConeGeometry.name,
-    TorusGeometry.name,
-    TorusKnotGeometry.name,
-    PolyhedronGeometry.name
-  ];
-  const advancedGeo: string[] = [
-    ConvexGeometryBox.name, 
-    LatheGeometry.name, 
-    ExtrudeGeometry.name, 
-    TubeGeometry.name, 
-    ExtrudeSvg.name,
-    ParametricGeometry.name,
-    TextGeometry.name,
-    ThreeBSP.name
-  ];
-  const spirits: string[] =[
-    Spirit.name,
-    Points.name,
-    Particles.name,
-    TextureParticles.name,
-    MultiTextureParticles.name,
-    TextureSprite.name,
-    TextureSprites.name,
-    TorusKnotPoints.name
-  ];
-  const advancedGeos : string[] = [
-    Group.name,
-    MergeGeometry.name,
-    SaveLoadMesh.name,
-    SaveLoadScene.name,
-    House.name,
-    OBJLoad.name,
-    MTLLoad.name,
-    ColladaLoad.name,
-    PDBLoad.name,
-    PLYLoad.name
-  ]
-  interface componentsConfig {
-    [key: string]: any
-  }
-  const components: componentsConfig = {
-    'PlanGeometry': <PlanGeometry />,
-    'CircleGeometry': <CircleGeometry />,
-    'RingGeometry': <RingGeometry />,
-    'ShapeGeometry': <ShapeGeometry />,
-    'BoxGeometry': <BoxGeometry />,
-    'SphereGeometry': <SphereGeometry />,
-    'CylinderGeometry': <CylinderGeometry />,
-    'ConeGeometry': <ConeGeometry />,
-    'TorusGeometry': <TorusGeometry />,
-    'TorusKnotGeometry': <TorusKnotGeometry />,
-    'PolyhedronGeometry': <PolyhedronGeometry />,
-    'ConvexGeometryBox': <ConvexGeometryBox />,
-    'LatheGeometry': <LatheGeometry />,
-    'ExtrudeGeometry': <ExtrudeGeometry />,
-    'TubeGeometry': <TubeGeometry />,
-    'ExtrudeSvg': <ExtrudeSvg />,
-    'ParametricGeometry': <ParametricGeometry />,
-    'TextGeometry': <TextGeometry />,
-    'ThreeBSP': <ThreeBSP />,
-    'Spirit': <Spirit />,
-    'Points': <Points />,
-    'Particles': <Particles />,
-    'TextureParticles': <TextureParticles />,
-    'MultiTextureParticles': <MultiTextureParticles />,
-    'TextureSprite': <TextureSprite />,
-    'TextureSprites': <TextureSprites />,
-    'TorusKnotPoints': <TorusKnotPoints />,
-    'Group': <Group />,
-    'MergeGeometry': <MergeGeometry />,
-    'SaveLoadMesh': <SaveLoadMesh/>,
-    'SaveLoadScene': <SaveLoadScene />,
-    'House': <House />,
-    'OBJLoad': <OBJLoad />,
-    'MTLLoad': <MTLLoad />,
-    'ColladaLoad': <ColladaLoad />,
-    'PDBLoad': <PDBLoad />,
-    'PLYLoad': <PLYLoad />
-  }
-  let history = useHistory();
-  const handleMenuClick = (type: any):void => {
-
-    history.replace(`/home/${type}`)
-
+export default function Home(props: any): JSX.Element {
+  const {route, history} = props;
+  const handleMenuClick = (path: any):void => {
+    history.replace(path)
   }
 
-  let { type } = useParams();
+  interface Routes {
+    path: string,
+    name: string,
+    title?: string,
+    routes?: Routes[]
+  }
 
+  const routes: Routes[] = route.routes;
+  const pathname: string = history.location.pathname;
+  const pathArray: string[] = pathname.split('/');
+  
   return (
     <Layout className="layout">
       <Header>
         <div className="logo">React Webgl</div>
-        <Menu theme="dark" mode="horizontal" selectedKeys={[type]} onClick={i => handleMenuClick(i.key)}>
-          <SubMenu icon={<SettingOutlined />} title="二维图形">
-            {
-              twoGeo.map(n => (
-                <Menu.Item key={n}>{n}</Menu.Item>
-              ))
-            }
-          </SubMenu>
-          <SubMenu icon={<SettingOutlined />} title="三维图形">
-            {
-              threeGeo.map(n => (
-                <Menu.Item key={n}>{n}</Menu.Item>
-              ))
-            }
-          </SubMenu>
-          <SubMenu icon={<SettingOutlined />} title="高级几何体">
-            {
-              advancedGeo.map(n => (
-                <Menu.Item key={n}>{n}</Menu.Item>
-              ))
-            }
-          </SubMenu>
-          <SubMenu icon={<SettingOutlined />} title="粒子与精灵">
-            {
-              spirits.map(n => (
-                <Menu.Item key={n}>{n}</Menu.Item>
-              ))
-            }
-          </SubMenu>
-          <SubMenu icon={<SettingOutlined />} title="创建加载高级网格和几何体">
-            {
-              advancedGeos.map(n => (
-                <Menu.Item key={n}>{n}</Menu.Item>
-              ))
-            }
-          </SubMenu>
+        <Menu theme="dark" mode="horizontal" selectedKeys={[pathname]} onClick={i => handleMenuClick(i.key)}>
+          {
+            routes.map(routeItem => (
+              <SubMenu icon={<SettingOutlined />} key={routeItem.path} title={routeItem.title}>
+                {
+                  routeItem.routes && routeItem.routes.map(r => (
+                    <Menu.Item key={r.path}>{r.name}</Menu.Item>
+                  ))
+                }
+              </SubMenu>
+            ))
+          }
         </Menu>
       </Header>
       <Content style={{ padding: '0 50px' }}>
         <Breadcrumb style={{ margin: '16px 0' }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>{type}</Breadcrumb.Item>
+          {
+            pathArray.map(pathString => pathString && <Breadcrumb.Item key={pathString}>{pathString}</Breadcrumb.Item>)
+          }
         </Breadcrumb>
         <div className="site-layout-content">
-          {type && components[type]}
+          {renderRoutes(routes)}
         </div>
       </Content>
       <Footer style={{ textAlign: 'center' }}>React Gl ©2020 Created by qxqxqxqx</Footer>

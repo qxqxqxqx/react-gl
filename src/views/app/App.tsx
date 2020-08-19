@@ -11,7 +11,7 @@ function App():ReactElement {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <Link className="App-link" to="/home/PlanGeometry">
+        <Link className="App-link" to="/home/twod/PlanGeometry">
           开始
         </Link>
       </header>
