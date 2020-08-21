@@ -3,21 +3,27 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-05 17:41:58
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-05 18:02:58
+ * @LastEditTime: 2020-08-21 17:04:16
  * @Description: 由曲线生成管道
  */
 import React, { Component } from "react";
 import * as THREE from 'three';
-import * as dat from 'dat.gui';
-import { initRenderer, initCamera, addLargeGroundPlane, initDefaultLighting, applyMeshNormalMaterial, applyMeshStandardMaterial, redrawGeometryAndUpdateUI } from '../../../util/util.js';
-
+import {
+  initRenderer,
+  initCamera,
+  addLargeGroundPlane,
+  initDefaultLighting,
+  applyMeshNormalMaterial,
+  applyMeshStandardMaterial,
+  redrawGeometryAndUpdateUI
+} from '../../../util/util.js';
+import { IRHoc } from '../../../component/class/IRHoc';
+@IRHoc
 export default class TubeGeometry extends Component<any, any> {
   private wrapRef: React.RefObject<HTMLDivElement>;
-  private gui: dat.GUI;
   public constructor(props: any) {
     super(props);
     this.wrapRef = React.createRef<HTMLDivElement>();
-    this.gui = new dat.GUI();
   }
 
   public componentDidMount() {
@@ -25,16 +31,10 @@ export default class TubeGeometry extends Component<any, any> {
   }
 
   /**
-   * remove gui
-   */
-  public componentWillUnmount() {
-    this.gui.destroy()
-  }
-
-  /**
    * init
    */
   public init() {
+    const { gui, changeAnimationId } = this.props;
     if (this.wrapRef.current) {
       const wrap: HTMLDivElement = this.wrapRef.current;
       // init renderer
@@ -62,7 +62,6 @@ export default class TubeGeometry extends Component<any, any> {
           transparent: false
         });
         points.forEach(function (point) {
-
           const spGeom = new THREE.SphereGeometry(0.2);
           const spMesh = new THREE.Mesh(spGeom, material);
           spMesh.position.copy(point);
@@ -88,14 +87,12 @@ export default class TubeGeometry extends Component<any, any> {
         redraw: any,
         mesh: any
       }
-      const self = this;
-      const Controls = function (this: Controls) {
 
+      const Controls = function (this: Controls) {
         // the start geometry and material. Used as the base for the settings in the control UI
         this.appliedMaterial = applyMeshNormalMaterial
         this.castShadow = true;
         this.groundPlaneVisible = true;
-
         this.numberOfPoints = 5;
         this.segments = 64;
         this.radius = 1;
@@ -103,7 +100,6 @@ export default class TubeGeometry extends Component<any, any> {
         this.closed = false;
         this.points = [];
         // we need the first child, since it's a multimaterial
-
         this.newPoints = function () {
           const points = [];
           for (let i = 0; i < controls.numberOfPoints; i++) {
@@ -118,7 +114,7 @@ export default class TubeGeometry extends Component<any, any> {
         };
 
         this.redraw = function () {
-          redrawGeometryAndUpdateUI(self.gui, scene, controls, function () {
+          redrawGeometryAndUpdateUI(gui, scene, controls, function () {
             return generatePoints(controls.points, controls.segments, controls.radius, controls.radiusSegments,
               controls.closed);
           });
@@ -126,20 +122,19 @@ export default class TubeGeometry extends Component<any, any> {
       } as any as { new(): Controls; };;
       const controls = new Controls();
 
-      this.gui.add(controls, 'newPoints');
-      this.gui.add(controls, 'numberOfPoints', 2, 15).step(1).onChange(controls.newPoints);
-      this.gui.add(controls, 'segments', 0, 200).step(1).onChange(controls.redraw);
-      this.gui.add(controls, 'radius', 0, 10).onChange(controls.redraw);
-      this.gui.add(controls, 'radiusSegments', 0, 100).step(1).onChange(controls.redraw);
-      this.gui.add(controls, 'closed').onChange(controls.redraw);
+      gui.add(controls, 'newPoints');
+      gui.add(controls, 'numberOfPoints', 2, 15).step(1).onChange(controls.newPoints);
+      gui.add(controls, 'segments', 0, 200).step(1).onChange(controls.redraw);
+      gui.add(controls, 'radius', 0, 10).onChange(controls.redraw);
+      gui.add(controls, 'radiusSegments', 0, 100).step(1).onChange(controls.redraw);
+      gui.add(controls, 'closed').onChange(controls.redraw);
       // add a material section, so we can switch between materials
-      this.gui.add(controls, 'appliedMaterial', {
+      gui.add(controls, 'appliedMaterial', {
         meshNormal: applyMeshNormalMaterial,
         meshStandard: applyMeshStandardMaterial
       }).onChange(controls.redraw)
-
-      this.gui.add(controls, 'castShadow').onChange(function (e) { controls.mesh.castShadow = e })
-      this.gui.add(controls, 'groundPlaneVisible').onChange(function (e) { groundPlane.material.visible = e })
+      gui.add(controls, 'castShadow').onChange(function (e: any) { controls.mesh.castShadow = e })
+      gui.add(controls, 'groundPlaneVisible').onChange(function (e: any) { groundPlane.material.visible = e })
 
       // initialize the first redraw so everything gets initialized
       controls.newPoints();
@@ -155,9 +150,8 @@ export default class TubeGeometry extends Component<any, any> {
           spGroup.rotation.x = step
           spGroup.rotation.z = step
         }
-
-
-        requestAnimationFrame(render);
+        const animationId = requestAnimationFrame(render);
+        changeAnimationId(animationId);
         renderer.render(scene, camera);
       }
       render();

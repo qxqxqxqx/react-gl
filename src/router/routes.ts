@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-19 13:48:04
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-19 17:25:52
+ * @LastEditTime: 2020-08-21 16:23:15
  * @Description: 路由配置文件
  */
 import App from '../views/app/App';
@@ -72,25 +72,25 @@ export const homeTwodRoute = {
       path: '/home/twod/PlanGeometry',
       exact: true,
       component: PlanGeometry,
-      name: PlanGeometry.name,
+      name: 'PlanGeometry',
     },
     {
       path: '/home/twod/CircleGeometry',
       exact: true,
       component: CircleGeometry,
-      name: CircleGeometry.name,
+      name: 'CircleGeometry',
     },
     {
       path: '/home/twod/RingGeometry',
       exact: true,
       component: RingGeometry,
-      name: RingGeometry.name,
+      name: 'RingGeometry',
     },
     {
       path: '/home/twod/ShapeGeometry',
       exact: true,
       component: ShapeGeometry,
-      name: ShapeGeometry.name,
+      name: 'ShapeGeometry',
     },
   ],
 };
@@ -105,43 +105,43 @@ export const homeThreedRoute = {
       path: '/home/threed/BoxGeometry',
       exact: true,
       component: BoxGeometry,
-      name: BoxGeometry.name,
+      name: 'BoxGeometry',
     },
     {
       path: '/home/threed/SphereGeometry',
       exact: true,
       component: SphereGeometry,
-      name: SphereGeometry.name,
+      name: 'SphereGeometry',
     },
     {
       path: '/home/threed/CylinderGeometry',
       exact: true,
       component: CylinderGeometry,
-      name: CylinderGeometry.name,
+      name: 'CylinderGeometry',
     },
     {
       path: '/home/threed/ConeGeometry',
       exact: true,
       component: ConeGeometry,
-      name: ConeGeometry.name,
+      name: 'ConeGeometry',
     },
     {
       path: '/home/threed/TorusGeometry',
       exact: true,
       component: TorusGeometry,
-      name: TorusGeometry.name,
+      name: 'TorusGeometry',
     },
     {
       path: '/home/threed/TorusKnotGeometry',
       exact: true,
       component: TorusKnotGeometry,
-      name: TorusKnotGeometry.name,
+      name: 'TorusKnotGeometry',
     },
     {
       path: '/home/threed/PolyhedronGeometry',
       exact: true,
       component: PolyhedronGeometry,
-      name: PolyhedronGeometry.name,
+      name: 'PolyhedronGeometry',
     },
   ],
 };
@@ -156,49 +156,49 @@ export const homeAdvancedRoute = {
       component: ConvexGeometryBox,
       path: '/home/advanced/ConvexGeometryBox',
       exact: true,
-      name: ConvexGeometryBox.name,
+      name: 'ConvexGeometryBox',
     },
     {
       component: LatheGeometry,
       path: '/home/advanced/LatheGeometry',
       exact: true,
-      name: LatheGeometry.name,
+      name: 'LatheGeometry',
     },
     {
       component: ExtrudeGeometry,
       path: '/home/advanced/ExtrudeGeometry',
       exact: true,
-      name: ExtrudeGeometry.name,
+      name: 'ExtrudeGeometry',
     },
     {
       component: TubeGeometry,
       path: '/home/advanced/TubeGeometry',
       exact: true,
-      name: TubeGeometry.name,
+      name: 'TubeGeometry',
     },
     {
       component: ExtrudeSvg,
       path: '/home/advanced/ExtrudeSvg',
       exact: true,
-      name: ExtrudeSvg.name,
+      name: 'ExtrudeSvg',
     },
     {
       component: ParametricGeometry,
       path: '/home/advanced/ParametricGeometry',
       exact: true,
-      name: ParametricGeometry.name,
+      name: 'ParametricGeometry',
     },
     {
       component: TextGeometry,
       path: '/home/advanced/TextGeometry',
       exact: true,
-      name: TextGeometry.name,
+      name: 'TextGeometry',
     },
     {
       component: ThreeBSP,
       path: '/home/advanced/ThreeBSP',
       exact: true,
-      name: ThreeBSP.name,
+      name: 'ThreeBSP',
     },
   ],
 };

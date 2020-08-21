@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-07 10:32:36
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-07 11:29:57
+ * @LastEditTime: 2020-08-21 17:29:04
  * @Description: 粒子
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -33,19 +33,16 @@ export default function Spirit(props: any):ReactElement {
       camera.lookAt(new THREE.Vector3(0, 0, 0));
       // init trackballControls
       const trackballControls = initTrackballControls(camera, renderer);
-
       for (let x = -15; x < 15; x++) {
         for (let y = -15; y < 15; y++) {
           let material = new THREE.SpriteMaterial({
             color: Math.random() * 0xffffff
           });
-
           let sprite = new THREE.Sprite(material);
           sprite.position.set(x * 4, y * 4, 0);
           scene.add(sprite);
         }
       }
-
       const render = ():void => {
         // stats.update();
         trackballControls.update();

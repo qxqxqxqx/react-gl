@@ -3,12 +3,11 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-06 17:07:22
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-07 18:34:47
+ * @LastEditTime: 2020-08-21 17:13:05
  * @Description: 三维几何体之间结合成新的几何体
  */
 import React, { Component } from "react";
 import * as THREE from 'three';
-import * as dat from 'dat.gui';
 import {
   initRenderer,
   initCamera,
@@ -17,15 +16,14 @@ import {
   applyMeshNormalMaterial
 } from '../../../util/util';
 import '../../../util/ThreeBSP';
-import redrawResult from './bspHelper'
-
+import redrawResult from './bspHelper';
+import { IRHoc } from '../../../component/class/IRHoc';
+@IRHoc
 export default class ThreeBSP extends Component<any, any> {
   private wrapRef: React.RefObject<HTMLDivElement>;
-  private gui: dat.GUI;
   public constructor(props: any) {
     super(props);
     this.wrapRef = React.createRef<HTMLDivElement>();
-    this.gui = new dat.GUI();
   }
 
   public componentDidMount() {
@@ -33,16 +31,10 @@ export default class ThreeBSP extends Component<any, any> {
   }
 
   /**
-   * remove gui
-   */
-  public componentWillUnmount() {
-    this.gui.destroy()
-  }
-
-  /**
    * init
    */
   public init() {
+    const { gui, changeAnimationId } = this.props;
     if (this.wrapRef.current) {
       const wrap: HTMLDivElement = this.wrapRef.current;
       // init renderer
@@ -61,7 +53,6 @@ export default class ThreeBSP extends Component<any, any> {
       initDefaultLighting(scene, undefined);
 
       const createMesh = (geom: THREE.Geometry): THREE.Mesh => {
-
         // assign two materials
         const meshMaterial = new THREE.MeshNormalMaterial();
         meshMaterial.side = THREE.DoubleSide;
@@ -71,18 +62,16 @@ export default class ThreeBSP extends Component<any, any> {
           wireframeLinewidth: 0.5
         });
         wireFrameMat.wireframe = true;
-
         // create a multimaterial
         const mesh = new THREE.Mesh(geom, wireFrameMat);
-
         return mesh;
       }
 
-      const sphere1:any = createMesh(new THREE.SphereGeometry(5, 20, 30));
+      const sphere1: any = createMesh(new THREE.SphereGeometry(5, 20, 30));
       sphere1.position.x = -2;
-      const sphere2:any = createMesh(new THREE.SphereGeometry(5, 20, 30));
+      const sphere2: any = createMesh(new THREE.SphereGeometry(5, 20, 30));
       sphere2.position.set(3, 0, 0);
-      const cube:any = createMesh(new THREE.BoxGeometry(5, 5, 5));
+      const cube: any = createMesh(new THREE.BoxGeometry(5, 5, 5));
       cube.position.x = -7;
 
       // add the sphere to the scene
@@ -96,7 +85,7 @@ export default class ThreeBSP extends Component<any, any> {
       camera.position.z = 20;
       camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-      let result:any;
+      let result: any;
 
       interface Controls {
         // members of your "class" go here
@@ -151,7 +140,7 @@ export default class ThreeBSP extends Component<any, any> {
           setTimeout(() => {
             result = redrawResult(result, sphere1, sphere2, cube, controls, scene);
           }, 200);
-          
+
         };
 
         this.hideWireframes = false;
@@ -159,7 +148,7 @@ export default class ThreeBSP extends Component<any, any> {
       } as any as { new(): Controls; };;
       const controls = new Controls();
 
-      const guiSphere1 = this.gui.addFolder("Sphere1");
+      const guiSphere1 = gui.addFolder("Sphere1");
       guiSphere1.add(controls, "sphere1PosX", -15, 15).onChange(function () {
         sphere1.position.set(controls.sphere1PosX, controls.sphere1PosY, controls.sphere1PosZ)
       });
@@ -169,11 +158,11 @@ export default class ThreeBSP extends Component<any, any> {
       guiSphere1.add(controls, "sphere1PosZ", -15, 15).onChange(function () {
         sphere1.position.set(controls.sphere1PosX, controls.sphere1PosY, controls.sphere1PosZ)
       });
-      guiSphere1.add(controls, "sphere1Scale", 0, 10).onChange(function (e) {
+      guiSphere1.add(controls, "sphere1Scale", 0, 10).onChange(function (e: any) {
         sphere1.scale.set(e, e, e)
       });
 
-      const guiSphere2 = this.gui.addFolder("Sphere2");
+      const guiSphere2 = gui.addFolder("Sphere2");
       guiSphere2.add(controls, "sphere2PosX", -15, 15).onChange(function () {
         sphere2.position.set(controls.sphere2PosX, controls.sphere2PosY, controls.sphere2PosZ)
       });
@@ -183,12 +172,12 @@ export default class ThreeBSP extends Component<any, any> {
       guiSphere2.add(controls, "sphere2PosZ", -15, 15).onChange(function () {
         sphere2.position.set(controls.sphere2PosX, controls.sphere2PosY, controls.sphere2PosZ)
       });
-      guiSphere2.add(controls, "sphere2Scale", 0, 10).onChange(function (e) {
+      guiSphere2.add(controls, "sphere2Scale", 0, 10).onChange(function (e: any) {
         sphere2.scale.set(e, e, e)
       });
       guiSphere2.add(controls, "actionSphere", ["subtract", "intersect", "union", "none"]);
 
-      const guiCube = this.gui.addFolder("cube");
+      const guiCube = gui.addFolder("cube");
       guiCube.add(controls, "cubePosX", -15, 15).onChange(function () {
         cube.position.set(controls.cubePosX, controls.cubePosY, controls.cubePosZ)
       });
@@ -198,20 +187,20 @@ export default class ThreeBSP extends Component<any, any> {
       guiCube.add(controls, "cubePosZ", -15, 15).onChange(function () {
         cube.position.set(controls.cubePosX, controls.cubePosY, controls.cubePosZ)
       });
-      guiCube.add(controls, "scaleX", 0, 10).onChange(function (e) {
+      guiCube.add(controls, "scaleX", 0, 10).onChange(function (e: any) {
         cube.scale.x = e
       });
-      guiCube.add(controls, "scaleY", 0, 10).onChange(function (e) {
+      guiCube.add(controls, "scaleY", 0, 10).onChange(function (e: any) {
         cube.scale.y = e
       });
-      guiCube.add(controls, "scaleZ", 0, 10).onChange(function (e) {
+      guiCube.add(controls, "scaleZ", 0, 10).onChange(function (e: any) {
         cube.scale.z = e
       });
       guiCube.add(controls, "actionCube", ["subtract", "intersect", "union", "none"]);
 
-      this.gui.add(controls, "showResult");
-      this.gui.add(controls, "rotateResult");
-      this.gui.add(controls, "hideWireframes").onChange(function () {
+      gui.add(controls, "showResult");
+      gui.add(controls, "rotateResult");
+      gui.add(controls, "hideWireframes").onChange(function () {
         if (controls.hideWireframes) {
           console.log('-')
           sphere1.material.visible = false;
@@ -223,7 +212,7 @@ export default class ThreeBSP extends Component<any, any> {
           cube.material.visible = true;
         }
       });
-      
+
       // render and animation
       const render = () => {
         if (controls.rotateResult && result) {
@@ -231,14 +220,13 @@ export default class ThreeBSP extends Component<any, any> {
           //      result.rotation.x+=0.04;
           result.rotation.z -= 0.005;
         }
-
-        // render using requestAnimationFrame
-        requestAnimationFrame(render);
+        const animationId = requestAnimationFrame(render);
+        changeAnimationId(animationId);
         renderer.render(scene, camera);
       }
       render();
     }
-    
+
 
   }
 

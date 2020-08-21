@@ -3,30 +3,28 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-05 18:17:34
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-06 10:40:12
+ * @LastEditTime: 2020-08-21 17:06:14
  * @Description: SVG path 拉伸成三维图形
  */
 import React, { Component } from "react";
 import * as THREE from 'three';
-import * as dat from 'dat.gui';
-import { 
-  initRenderer, 
-  initCamera, 
-  addLargeGroundPlane, 
-  initDefaultLighting, 
-  applyMeshNormalMaterial, 
-  applyMeshStandardMaterial, 
-  redrawGeometryAndUpdateUI 
+import {
+  initRenderer,
+  initCamera,
+  addLargeGroundPlane,
+  initDefaultLighting,
+  applyMeshNormalMaterial,
+  applyMeshStandardMaterial,
+  redrawGeometryAndUpdateUI
 } from '../../../util/util';
 import transformSVGPath from '../../../util/svgToThree';
-
+import { IRHoc } from '../../../component/class/IRHoc';
+@IRHoc
 export default class ExtrudeSvg extends Component<any, any> {
   private wrapRef: React.RefObject<HTMLDivElement>;
-  private gui: dat.GUI;
   public constructor(props: any) {
     super(props);
     this.wrapRef = React.createRef<HTMLDivElement>();
-    this.gui = new dat.GUI();
   }
 
   public componentDidMount() {
@@ -34,16 +32,10 @@ export default class ExtrudeSvg extends Component<any, any> {
   }
 
   /**
-   * remove gui
-   */
-  public componentWillUnmount() {
-    this.gui.destroy()
-  }
-
-  /**
    * init
    */
   public init() {
+    const { gui, changeAnimationId } = this.props;
     if (this.wrapRef.current) {
       const wrap: HTMLDivElement = this.wrapRef.current;
       // init renderer
@@ -85,14 +77,12 @@ export default class ExtrudeSvg extends Component<any, any> {
         redraw: any,
         mesh: any
       }
-      const self = this;
-      const Controls = function (this: Controls) {
 
+      const Controls = function (this: Controls) {
         // the start geometry and material. Used as the base for the settings in the control UI
         this.appliedMaterial = applyMeshNormalMaterial
         this.castShadow = true;
         this.groundPlaneVisible = true;
-
         this.depth = 2;
         this.bevelThickness = 2;
         this.bevelSize = 0.5;
@@ -104,7 +94,7 @@ export default class ExtrudeSvg extends Component<any, any> {
 
         // redraw function, updates the control UI and recreates the geometry.
         this.redraw = function () {
-          redrawGeometryAndUpdateUI(self.gui, scene, controls, function () {
+          redrawGeometryAndUpdateUI(gui, scene, controls, function () {
             const options = {
               depth: controls.depth,
               bevelThickness: controls.bevelThickness,
@@ -123,21 +113,20 @@ export default class ExtrudeSvg extends Component<any, any> {
       } as any as { new(): Controls; };;
       const controls = new Controls();
 
-      this.gui.add(controls, 'depth', 0, 20).onChange(controls.redraw);
-      this.gui.add(controls, 'bevelThickness', 0, 10).onChange(controls.redraw);
-      this.gui.add(controls, 'bevelSize', 0, 10).onChange(controls.redraw);
-      this.gui.add(controls, 'bevelSegments', 0, 30).step(1).onChange(controls.redraw);
-      this.gui.add(controls, 'bevelEnabled').onChange(controls.redraw);
-      this.gui.add(controls, 'curveSegments', 1, 30).step(1).onChange(controls.redraw);
-      this.gui.add(controls, 'steps', 1, 5).step(1).onChange(controls.redraw);
+      gui.add(controls, 'depth', 0, 20).onChange(controls.redraw);
+      gui.add(controls, 'bevelThickness', 0, 10).onChange(controls.redraw);
+      gui.add(controls, 'bevelSize', 0, 10).onChange(controls.redraw);
+      gui.add(controls, 'bevelSegments', 0, 30).step(1).onChange(controls.redraw);
+      gui.add(controls, 'bevelEnabled').onChange(controls.redraw);
+      gui.add(controls, 'curveSegments', 1, 30).step(1).onChange(controls.redraw);
+      gui.add(controls, 'steps', 1, 5).step(1).onChange(controls.redraw);
       // add a material section, so we can switch between materials
-      this.gui.add(controls, 'appliedMaterial', {
+      gui.add(controls, 'appliedMaterial', {
         meshNormal: applyMeshNormalMaterial,
         meshStandard: applyMeshStandardMaterial
       }).onChange(controls.redraw)
-
-      this.gui.add(controls, 'castShadow').onChange(function (e) { controls.mesh.castShadow = e })
-      this.gui.add(controls, 'groundPlaneVisible').onChange(function (e) { groundPlane.material.visible = e })
+      gui.add(controls, 'castShadow').onChange(function (e: any) { controls.mesh.castShadow = e })
+      gui.add(controls, 'groundPlaneVisible').onChange(function (e: any) { groundPlane.material.visible = e })
 
       // initialize the first redraw so everything gets initialized
       controls.redraw();
@@ -147,9 +136,8 @@ export default class ExtrudeSvg extends Component<any, any> {
         controls.mesh.rotation.y = step += 0.005
         controls.mesh.rotation.x = step
         controls.mesh.rotation.z = step
-
-
-        requestAnimationFrame(render);
+        const animationId = requestAnimationFrame(render);
+        changeAnimationId(animationId);
         renderer.render(scene, camera);
       }
       render();
