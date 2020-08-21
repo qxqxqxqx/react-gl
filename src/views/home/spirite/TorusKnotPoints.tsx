@@ -3,18 +3,19 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-12 11:21:58
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-12 11:52:42
+ * @LastEditTime: 2020-08-21 18:14:34
  * @Description: point组成环状纽结 
  */
 import React, { useRef, useEffect, ReactElement } from "react";
 import * as THREE from 'three';
 import * as dat from 'dat.gui';
-import {initRenderer, initCamera} from '../../../util/util.js';
+import { initRenderer, initCamera } from '../../../util/util.js';
 
 export default function TorusKnotPoints(props: any): ReactElement {
   const wrapRef = useRef(null);
   useEffect(() => {
     const gui = new dat.GUI();
+    let animationId: number | null = null;
     if (wrapRef.current) {
       const wrap: any = wrapRef.current;
       // init renderer
@@ -24,29 +25,22 @@ export default function TorusKnotPoints(props: any): ReactElement {
       // camera.lookAt(new THREE.Vector3(20, 30, 0));
       // init scene
       const scene: any = new THREE.Scene();
-
-      const generateSprite = (): THREE.Texture=> {
-
+      const generateSprite = (): THREE.Texture => {
         const canvas = document.createElement('canvas');
         canvas.width = 16;
         canvas.height = 16;
-
-        const context:any = canvas.getContext('2d');
+        const context: any = canvas.getContext('2d');
         const gradient = context.createRadialGradient(canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2);
         gradient.addColorStop(0, 'rgba(255,255,255,1)');
         gradient.addColorStop(0.2, 'rgba(0,255,255,1)');
         gradient.addColorStop(0.4, 'rgba(0,0,64,1)');
         gradient.addColorStop(1, 'rgba(0,0,0,1)');
-
         context.fillStyle = gradient;
         context.fillRect(0, 0, canvas.width, canvas.height);
-
         const texture = new THREE.Texture(canvas);
         texture.needsUpdate = true;
         return texture;
-
       }
-
       const createPoints = (geom: THREE.TorusKnotGeometry): THREE.Points => {
         const material = new THREE.PointsMaterial({
           color: 0xffffff,
@@ -117,15 +111,14 @@ export default function TorusKnotPoints(props: any): ReactElement {
         if (controls.rotate) {
           knot.rotation.y = step += 0.01;
         }
-
-        // render using requestAnimationFrame
-        requestAnimationFrame(render);
+        animationId = requestAnimationFrame(render);
         webGLRenderer.render(scene, camera);
       }
       render();
     }
     return () => {
-      gui.destroy()
+      gui.destroy();
+      animationId && cancelAnimationFrame(animationId);
     }
   }, []);
 

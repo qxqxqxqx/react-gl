@@ -3,21 +3,22 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-07 10:32:36
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-21 17:29:04
+ * @LastEditTime: 2020-08-21 17:54:00
  * @Description: 粒子
  */
 import React, { useRef, useEffect, ReactElement } from "react";
 import * as THREE from 'three';
-import { 
-  initRenderer, 
+import {
+  initRenderer,
   initCamera,
   initTrackballControls
 } from '../../../util/util.js';
 
-export default function Spirit(props: any):ReactElement {
+export default function Spirit(props: any): ReactElement {
 
   const wrapRef = useRef(null);
   useEffect(() => {
+    let animationId: number | null = null;
     if (wrapRef.current) {
       const wrap = wrapRef.current;
       // init renderer
@@ -43,16 +44,18 @@ export default function Spirit(props: any):ReactElement {
           scene.add(sprite);
         }
       }
-      const render = ():void => {
-        // stats.update();
+      const render = (): void => {
         trackballControls.update();
-        requestAnimationFrame(render);
+        animationId = requestAnimationFrame(render);
         renderer.render(scene, camera);
       }
       render();
     }
+    return () => {
+      animationId && cancelAnimationFrame(animationId);
+    };
   }, []);
-  
+
   return <div ref={wrapRef} className="gl-wrapper"></div>;
 
 }

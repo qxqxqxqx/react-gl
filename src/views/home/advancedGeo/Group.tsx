@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-13 14:35:48
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-13 16:46:54
+ * @LastEditTime: 2020-08-21 18:18:05
  * @Description: 网格组合
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -21,6 +21,7 @@ export default function Group(props: any): ReactElement {
   const wrapRef = useRef(null);
   useEffect(() => {
     const gui = new dat.GUI();
+    let animationId: number | null = null;
     if (wrapRef.current) {
       const wrap = wrapRef.current;
       // init renderer
@@ -33,13 +34,13 @@ export default function Group(props: any): ReactElement {
       const groundPlane = addLargeGroundPlane(scene, undefined);
       groundPlane.position.y = 0;
 
-      let sphere:any;
-      let cube:any;
+      let sphere: any;
+      let cube: any;
       let group: THREE.Group;
       let bboxMesh: THREE.Mesh;
       let arrow: THREE.ArrowHelper;
 
-      const createMesh =(geom: THREE.Geometry)=> {
+      const createMesh = (geom: THREE.Geometry) => {
 
         // assign two materials
         const meshMaterial = new THREE.MeshNormalMaterial();
@@ -57,7 +58,7 @@ export default function Group(props: any): ReactElement {
         const v1 = new THREE.Vector3();
         object.updateMatrixWorld(true);
         box.makeEmpty();
-        object.traverse(function (node:any) {
+        object.traverse(function (node: any) {
           if (node.geometry !== undefined && node.geometry.vertices !== undefined) {
             const vertices = node.geometry.vertices;
             for (let i = 0, il = vertices.length; i < il; i++) {
@@ -248,13 +249,14 @@ export default function Group(props: any): ReactElement {
           sphere.rotation.y += step;
           cube.rotation.y += step;
         }
-        requestAnimationFrame(render);
+        animationId = requestAnimationFrame(render);
         renderer.render(scene, camera);
       }
       render();
     }
     return () => {
-      gui.destroy()
+      gui.destroy();
+      animationId && cancelAnimationFrame(animationId);
     }
   }, []);
 

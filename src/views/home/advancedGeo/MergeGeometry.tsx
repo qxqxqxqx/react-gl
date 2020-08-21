@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-14 17:42:12
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-14 17:53:56
+ * @LastEditTime: 2020-08-21 18:18:55
  * @Description: merge
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -19,6 +19,7 @@ export default function MergeGeometry(props: any): ReactElement {
   const wrapRef = useRef(null);
   useEffect(() => {
     const gui = new dat.GUI();
+    let animationId: number | null = null;
     if (wrapRef.current) {
       const wrap = wrapRef.current;
       // init renderer
@@ -119,13 +120,14 @@ export default function MergeGeometry(props: any): ReactElement {
         camera.lookAt(scene.position);
 
         // render using requestAnimationFrame
-        requestAnimationFrame(render);
+        animationId = requestAnimationFrame(render);
         renderer.render(scene, camera);
       }
       render();
     }
     return () => {
-      gui.destroy()
+      gui.destroy();
+      animationId && cancelAnimationFrame(animationId);
     }
   }, []);
 

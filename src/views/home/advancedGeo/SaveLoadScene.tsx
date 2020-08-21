@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-15 10:49:59
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-15 10:58:17
+ * @LastEditTime: 2020-08-21 18:22:22
  * @Description: save load scene
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -19,6 +19,7 @@ export default function SaveLoadScene(props: any): ReactElement {
   const wrapRef = useRef(null);
   useEffect(() => {
     const gui = new dat.GUI();
+    let animationId: number | null = null;
     if (wrapRef.current) {
       const wrap = wrapRef.current;
       // init renderer
@@ -128,13 +129,14 @@ export default function SaveLoadScene(props: any): ReactElement {
 
       const render = (): void => {
         // render using requestAnimationFrame
-        requestAnimationFrame(render);
+        animationId = requestAnimationFrame(render);
         renderer.render(scene, camera);
       }
       render();
     }
     return () => {
-      gui.destroy()
+      gui.destroy();
+      animationId && cancelAnimationFrame(animationId);
     }
   }, []);
 

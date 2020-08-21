@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-11 17:17:40
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-11 17:56:30
+ * @LastEditTime: 2020-08-21 18:07:09
  * @Description: 多种纹理
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -20,6 +20,7 @@ export default function MultiTextureParticles(props: any): ReactElement {
   const wrapRef = useRef(null);
   useEffect(() => {
     const gui = new dat.GUI();
+    let animationId: number | null = null;
     if (wrapRef.current) {
       const wrap = wrapRef.current;
       // init renderer
@@ -156,13 +157,14 @@ export default function MultiTextureParticles(props: any): ReactElement {
             child.geometry.verticesNeedUpdate = true;
           }
         });
-        requestAnimationFrame(render);
+        animationId = requestAnimationFrame(render);
         renderer.render(scene, camera);
       }
       render();
     }
     return () => {
-      gui.destroy()
+      gui.destroy();
+      animationId && cancelAnimationFrame(animationId);
     }
   }, []);
 

@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-11 19:36:58
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-12 11:23:11
+ * @LastEditTime: 2020-08-21 18:11:03
  * @Description: 使用精灵贴图做纹理
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -17,6 +17,7 @@ export default function TextureSprite(props: any): ReactElement {
   const wrapRef = useRef(null);
   useEffect(() => {
     const gui = new dat.GUI();
+    let animationId: number | null = null;
     if (wrapRef.current) {
       const wrap: any = wrapRef.current;
       // init renderer
@@ -151,7 +152,7 @@ export default function TextureSprite(props: any): ReactElement {
             }
           }
         });
-        requestAnimationFrame(render);
+        animationId = requestAnimationFrame(render);
         webGLRenderer.render(scene, camera);
         webGLRenderer.autoClear = false;
         webGLRenderer.render(sceneOrtho, cameraOrtho);
@@ -159,7 +160,8 @@ export default function TextureSprite(props: any): ReactElement {
       render();
     }
     return () => {
-      gui.destroy()
+      gui.destroy();
+      animationId && cancelAnimationFrame(animationId);
     }
   }, []);
 

@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-18 19:50:20
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-18 19:57:06
+ * @LastEditTime: 2020-08-21 18:25:54
  * @Description: ColladaLoader
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -19,7 +19,7 @@ export default function ColladaLoad(props: any): ReactElement {
     if (wrapRef.current) {
       const wrap = wrapRef.current;
       // init camera
-      const camera = initCamera(wrap, new THREE.Vector3(-30, 40, 50));
+      const camera = initCamera(wrap, new THREE.Vector3(-30, 60, 100));
       camera.lookAt(new THREE.Vector3(0, 45, 0));
       const loaderScene = new BaseLoaderScene(wrap, camera, undefined, undefined, undefined);
       const loader = new ColladaLoader();

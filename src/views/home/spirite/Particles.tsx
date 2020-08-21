@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-07 17:19:29
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-10 14:12:34
+ * @LastEditTime: 2020-08-21 17:57:40
  * @Description: 粒子云
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -20,6 +20,7 @@ export default function Particles(props: any): ReactElement {
   const wrapRef = useRef(null);
   useEffect(() => {
     const gui = new dat.GUI();
+    let animationId: number | null = null;
     if (wrapRef.current) {
       const wrap = wrapRef.current;
       // init renderer
@@ -118,22 +119,20 @@ export default function Particles(props: any): ReactElement {
 
       let step = 0;
       const render = (): void => {
-        // stats.update();
         trackballControls.update();
-
         if (controls.rotate) {
           step += 0.01;
           cloud.rotation.x = step;
           cloud.rotation.z = step;
         }
-
-        requestAnimationFrame(render);
+        animationId = requestAnimationFrame(render);
         renderer.render(scene, camera);
       }
       render();
     }
     return () => {
-      gui.destroy()
+      gui.destroy();
+      animationId && cancelAnimationFrame(animationId);
     }
   }, []);
 

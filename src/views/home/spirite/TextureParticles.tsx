@@ -3,13 +3,13 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-11 13:24:47
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-11 16:47:02
+ * @LastEditTime: 2020-08-21 18:03:50
  * @Description: 给粒子加纹理
  */
 import React, { useRef, useEffect, ReactElement } from "react";
 import * as THREE from 'three';
 import * as dat from 'dat.gui';
-import {initRenderer, initCamera} from '../../../util/util.js';
+import { initRenderer, initCamera } from '../../../util/util.js';
 import rainball from '../../../assets/textures/particles/raindrop-3.png';
 
 export default function TextureParticles(props: any): ReactElement {
@@ -17,6 +17,7 @@ export default function TextureParticles(props: any): ReactElement {
   const wrapRef = useRef(null);
   useEffect(() => {
     const gui = new dat.GUI();
+    let animationId: number | null = null;
     if (wrapRef.current) {
       const wrap = wrapRef.current;
       // init renderer
@@ -66,7 +67,7 @@ export default function TextureParticles(props: any): ReactElement {
         });
         const range = 40;
         for (let i = 0; i < 1500; i++) {
-          const particle:any = new THREE.Vector3(
+          const particle: any = new THREE.Vector3(
             Math.random() * range - range / 2,
             Math.random() * range * 1.5,
             // Math.random() * range - range / 2
@@ -118,20 +119,21 @@ export default function TextureParticles(props: any): ReactElement {
 
       const render = (): void => {
         const vertices = cloud.geometry.vertices;
-        vertices.forEach(function (v:any) {
+        vertices.forEach(function (v: any) {
           v.y = v.y - (v.velocityY);
           v.x = v.x - (v.velocityX);
           if (v.y <= 0) v.y = 60;
           if (v.x <= -20 || v.x >= 20) v.velocityX = v.velocityX * -1;
         });
         cloud.geometry.verticesNeedUpdate = true;
-        requestAnimationFrame(render);
+        animationId = requestAnimationFrame(render);
         renderer.render(scene, camera);
       }
       render();
     }
     return () => {
-      gui.destroy()
+      gui.destroy();
+      animationId && cancelAnimationFrame(animationId);
     }
   }, []);
 
