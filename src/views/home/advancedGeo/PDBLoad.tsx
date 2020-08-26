@@ -9,7 +9,7 @@
 import React, { useRef, useEffect, ReactElement } from "react";
 import * as THREE from 'three';
 import { PDBLoader } from 'three/examples/jsm/loaders/PDBLoader';
-import BaseLoaderScene from './baseLoaderScene';
+import BaseLoaderScene from '../../../util/baseLoaderScene';
 import { initCamera } from '../../../util/util.js';
 
 export default function PDBLoad(props: any): ReactElement {

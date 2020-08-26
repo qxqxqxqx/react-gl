@@ -4,7 +4,7 @@
  * lights, and slowly rotates the model, around the z-axis
  */
 import * as THREE from 'three';
-import {initRenderer, initTrackballControls} from '../../../util/util.js';
+import {initRenderer, initTrackballControls} from './util.js';
 
 export default function BaseLoaderScene(wrap, providedCamera, shouldAddLights, shouldRotate, updateMesh) {
   const self = this;
@@ -41,12 +41,12 @@ export default function BaseLoaderScene(wrap, providedCamera, shouldAddLights, s
   /**
    * Interal function, called continously to render the scene
    */
-  this._render = function () {
+  this._render = function (time) {
     // self.stats.update();
     requestAnimationFrame(self._render);
     self.trackballControls.update(self.clock.getDelta());
 
-    if (updateMesh) this.updateMesh(self.mesh);
+    if (self.updateMesh) self.updateMesh(self.mesh, time);
 
     if (shouldRotate) {
       self.mesh.rotation.z += 0.01;

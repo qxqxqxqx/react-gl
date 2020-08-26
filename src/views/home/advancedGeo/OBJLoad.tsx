@@ -3,13 +3,13 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-18 14:56:25
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-18 16:07:20
+ * @LastEditTime: 2020-08-26 17:47:57
  * @Description: objloader
  */
 import React, { useRef, useEffect, ReactElement } from "react";
 import * as THREE from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import BaseLoaderScene from './baseLoaderScene';
+import BaseLoaderScene from '../../../util/baseLoaderScene';
 import { initCamera } from '../../../util/util.js';
 
 export default function OBJLoad(props: any): ReactElement {

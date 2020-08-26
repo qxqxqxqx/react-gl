@@ -1,18 +1,19 @@
 /*
  * @Author: qiaoxin
  * @Email: qiaoxinfc@gmail.com
- * @Date: 2020-08-18 20:16:05
+ * @Date: 2020-08-26 17:47:13
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-19 10:41:32
- * @Description: PLYLoader
+ * @LastEditTime: 2020-08-26 20:20:27
+ * @Description: 用tween.js实现动画
  */
 import React, { useRef, useEffect, ReactElement } from "react";
+import TWEEN from '@tweenjs/tween.js';
 import * as THREE from 'three';
 import { PLYLoader } from 'three/examples/jsm/loaders/PLYLoader';
 import BaseLoaderScene from '../../../util/baseLoaderScene';
 import { initCamera } from '../../../util/util.js';
 
-export default function PLYLoad(props: any): ReactElement {
+export default function TweenAnimation(props: any): ReactElement {
 
   const wrapRef = useRef(null);
   useEffect(() => {
@@ -21,7 +22,31 @@ export default function PLYLoad(props: any): ReactElement {
       // init camera
       const camera = initCamera(wrap, new THREE.Vector3(30, 30, 30));
       camera.lookAt(new THREE.Vector3(0, 0, 0));
-      const loaderScene = new BaseLoaderScene(wrap, camera, undefined, undefined, undefined);
+
+      const posSrc = { pos: 1 }
+      const tween = new TWEEN.Tween(posSrc)
+        .to({ pos: 0 }, 2000)
+        .easing(TWEEN.Easing.Bounce.InOut)
+      const tweenBack = new TWEEN.Tween(posSrc)
+        .to({ pos: 1 }, 2000)
+        .easing(TWEEN.Easing.Bounce.InOut);
+      tweenBack.chain(tween);
+      tween.chain(tweenBack);
+      tween.start(2000);
+      const loaderScene = new BaseLoaderScene(wrap, camera, false, true, function (mesh: any, time:any) {
+        TWEEN.update(time);
+        const positionArray = mesh.geometry.attributes['position'];
+        const origPosition = mesh.geometry.origPosition;
+        for (let i = 0; i < positionArray.count; i++) {
+          const oldPosX = origPosition.getX(i);
+          const oldPosY = origPosition.getY(i);
+          const oldPosZ = origPosition.getZ(i);
+          positionArray.setX(i, oldPosX * posSrc.pos);
+          positionArray.setY(i, oldPosY * posSrc.pos);
+          positionArray.setZ(i, oldPosZ * posSrc.pos);
+        }
+        positionArray.needsUpdate = true;
+      });
       const loader = new PLYLoader();
 
       const generateSprite = (): THREE.Texture => {
@@ -45,7 +70,7 @@ export default function PLYLoad(props: any): ReactElement {
         texture.needsUpdate = true;
         return texture;
       }
-      loader.load(`${process.env.PUBLIC_URL}/models/carcloud/carcloud.ply`, function (geometry) {
+      loader.load(`${process.env.PUBLIC_URL}/models/carcloud/carcloud.ply`, function (geometry: any) {
 
         const material = new THREE.PointsMaterial({
           color: 0xffffff,
@@ -56,6 +81,10 @@ export default function PLYLoad(props: any): ReactElement {
           depthWrite: false,
           map: generateSprite()
         });
+
+        // copy the original position, so we can referene that when tweening
+        const origPosition = geometry.attributes['position'].clone()
+        geometry.origPosition = origPosition
 
         const group = new THREE.Points(geometry, material);
         group.scale.set(2.5, 2.5, 2.5);

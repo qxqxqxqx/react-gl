@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-19 13:48:04
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-21 16:23:15
+ * @LastEditTime: 2020-08-26 17:53:39
  * @Description: 路由配置文件
  */
 import App from '../views/app/App';
@@ -55,6 +55,11 @@ import MTLLoad from '../views/home/advancedGeo/MTLLoad';
 import ColladaLoad from '../views/home/advancedGeo/ColladaLoad';
 import PDBLoad from '../views/home/advancedGeo/PDBLoad';
 import PLYLoad from '../views/home/advancedGeo/PLYLoad';
+
+import Animation from '../views/home/animation';
+import Basic from '../views/home/animation/Basic';
+import SelectObjects from '../views/home/animation/SelectObjects';
+import TweenAnimation from '../views/home/animation/TweenAnimation';
 
 const appRoute = {
   component: App,
@@ -239,10 +244,22 @@ export const homeAdvancedGeoRoute = {
   ],
 };
 
+export const homeAnimationRoute = {
+  component: Animation,
+  path: '/home/animation',
+  name: Animation.name,
+  title: '创建动画和移动摄像机',
+  routes: [
+    {component: Basic, path: '/home/animation/basic', exact: true, name: Basic.name},
+    {component: SelectObjects, path: '/home/animation/selectObjects', exact: true, name: SelectObjects.name},
+    {component: TweenAnimation, path: '/home/animation/tweenAnimation', exact: true, name: TweenAnimation.name},
+  ],
+};
+
 const homeRoute = {
   component: Home,
   path: '/home',
-  routes: [homeTwodRoute, homeThreedRoute, homeAdvancedRoute, homeSpiriteRoute, homeAdvancedGeoRoute],
+  routes: [homeTwodRoute, homeThreedRoute, homeAdvancedRoute, homeSpiriteRoute, homeAdvancedGeoRoute, homeAnimationRoute],
 };
 
 export default [appRoute, homeRoute];
