@@ -43,10 +43,10 @@ export default function BaseLoaderScene(wrap, providedCamera, shouldAddLights, s
    */
   this._render = function (time) {
     // self.stats.update();
-    requestAnimationFrame(self._render);
+    const id = requestAnimationFrame(self._render);
     self.trackballControls.update(self.clock.getDelta());
 
-    if (self.updateMesh) self.updateMesh(self.mesh, time);
+    if (self.updateMesh) self.updateMesh(self.mesh, time, id);
 
     if (shouldRotate) {
       self.mesh.rotation.z += 0.01;

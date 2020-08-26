@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-26 17:47:13
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-26 20:20:27
+ * @LastEditTime: 2020-08-26 20:30:34
  * @Description: 用tween.js实现动画
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -17,6 +17,7 @@ export default function TweenAnimation(props: any): ReactElement {
 
   const wrapRef = useRef(null);
   useEffect(() => {
+    let animationId: number | null = null;
     if (wrapRef.current) {
       const wrap = wrapRef.current;
       // init camera
@@ -33,7 +34,8 @@ export default function TweenAnimation(props: any): ReactElement {
       tweenBack.chain(tween);
       tween.chain(tweenBack);
       tween.start(2000);
-      const loaderScene = new BaseLoaderScene(wrap, camera, false, true, function (mesh: any, time:any) {
+      const loaderScene = new BaseLoaderScene(wrap, camera, false, true, function (mesh: any, time: any, id:any) {
+        animationId = id;
         TWEEN.update(time);
         const positionArray = mesh.geometry.attributes['position'];
         const origPosition = mesh.geometry.origPosition;
@@ -92,7 +94,9 @@ export default function TweenAnimation(props: any): ReactElement {
         loaderScene.render(group, camera);
       });
     }
-    return () => { }
+    return () => { 
+      animationId && cancelAnimationFrame(animationId);
+    }
   }, []);
 
   return <div ref={wrapRef} className="gl-wrapper"></div>;
