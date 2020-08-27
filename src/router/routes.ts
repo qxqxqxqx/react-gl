@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-19 13:48:04
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-26 17:53:39
+ * @LastEditTime: 2020-08-27 19:55:20
  * @Description: 路由配置文件
  */
 import App from '../views/app/App';
@@ -60,6 +60,7 @@ import Animation from '../views/home/animation';
 import Basic from '../views/home/animation/Basic';
 import SelectObjects from '../views/home/animation/SelectObjects';
 import TweenAnimation from '../views/home/animation/TweenAnimation';
+import TrackballControls from '../views/home/animation/TrackballControls';
 
 const appRoute = {
   component: App,
@@ -253,6 +254,7 @@ export const homeAnimationRoute = {
     {component: Basic, path: '/home/animation/basic', exact: true, name: Basic.name},
     {component: SelectObjects, path: '/home/animation/selectObjects', exact: true, name: SelectObjects.name},
     {component: TweenAnimation, path: '/home/animation/tweenAnimation', exact: true, name: TweenAnimation.name},
+    {component: TrackballControls, path: '/home/animation/trackballControls', exact: true, name: TrackballControls.name},
   ],
 };
 
