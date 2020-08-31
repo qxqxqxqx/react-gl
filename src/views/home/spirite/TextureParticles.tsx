@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-11 13:24:47
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-21 18:03:50
+ * @LastEditTime: 2020-08-31 17:07:29
  * @Description: 给粒子加纹理
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -38,7 +38,6 @@ export default function TextureParticles(props: any): ReactElement {
         sizeAttenuation: boolean,
         color: any
       ): void => {
-        // TODO: TextureLoader do not work!!!
         const texture = new THREE.Texture();
         const img = new Image();
         img.src = rainball;

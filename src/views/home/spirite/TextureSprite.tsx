@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-11 19:36:58
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-21 18:11:03
+ * @LastEditTime: 2020-08-31 17:07:52
  * @Description: 使用精灵贴图做纹理
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -44,7 +44,6 @@ export default function TextureSprite(props: any): ReactElement {
         color: number,
         spriteNumber: number
       ): void => {
-        // TODO: TextureLoader do not work!!!
         const texture = new THREE.Texture();
         const img = new Image();
         img.src = spriteSheet;

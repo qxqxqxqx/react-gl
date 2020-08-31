@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-19 13:48:04
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-27 19:55:20
+ * @LastEditTime: 2020-08-31 15:51:32
  * @Description: 路由配置文件
  */
 import App from '../views/app/App';
@@ -61,6 +61,9 @@ import Basic from '../views/home/animation/Basic';
 import SelectObjects from '../views/home/animation/SelectObjects';
 import TweenAnimation from '../views/home/animation/TweenAnimation';
 import TrackballControls from '../views/home/animation/TrackballControls';
+import FlyControl from '../views/home/animation/FlyControl';
+import FirstPersonControl from '../views/home/animation/FirstPersonControl';
+import OrbitControl from '../views/home/animation/OrbitControl';
 
 const appRoute = {
   component: App,
@@ -255,6 +258,9 @@ export const homeAnimationRoute = {
     {component: SelectObjects, path: '/home/animation/selectObjects', exact: true, name: SelectObjects.name},
     {component: TweenAnimation, path: '/home/animation/tweenAnimation', exact: true, name: TweenAnimation.name},
     {component: TrackballControls, path: '/home/animation/trackballControls', exact: true, name: TrackballControls.name},
+    {component: FlyControl, path: '/home/animation/flyControl', exact: true, name: FlyControl.name},
+    {component: FirstPersonControl, path: '/home/animation/firstPersonControl', exact: true, name: FirstPersonControl.name},
+    {component: OrbitControl, path: '/home/animation/orbitControl', exact: true, name: OrbitControl.name}
   ],
 };
 

@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-12 10:24:33
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-21 18:12:06
+ * @LastEditTime: 2020-08-31 17:07:39
  * @Description: 三维空间中定位粒子时使用精灵贴图 
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -51,7 +51,6 @@ export default function TextureSprites(props: any): ReactElement {
         spriteNumber: number,
         range: number
       ): THREE.Sprite => {
-        // TODO: TextureLoader do not work!!!
         const texture = new THREE.Texture();
         const img = new Image();
         img.src = spriteSheet;
