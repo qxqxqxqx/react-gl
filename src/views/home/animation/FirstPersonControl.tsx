@@ -12,7 +12,7 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import chroma from 'chroma-js';
 import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls';
 import { initCamera, initRenderer, initDefaultLighting } from '../../../util/util.js';
-import setRandomColors from '../../../util/setRandomColors';
+import { setRandomColors } from '../../../util/animationUtil';
 
 export default function FirstPersonControl(props: any): ReactElement {
 

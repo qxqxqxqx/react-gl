@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-27 19:32:52
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-31 15:49:28
+ * @LastEditTime: 2020-09-02 15:37:41
  * @Description: 轨迹球控制器
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -12,7 +12,7 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import chroma from 'chroma-js';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
 import { initCamera, initRenderer, initDefaultLighting } from '../../../util/util.js';
-import setRandomColors from '../../../util/setRandomColors';
+import { setRandomColors } from '../../../util/animationUtil';
 
 export default function TrackballControl(props: any): ReactElement {
 

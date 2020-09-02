@@ -1,18 +1,21 @@
 /*
  * @Author: qiaoxin
  * @Email: qiaoxinfc@gmail.com
- * @Date: 2020-08-31 18:09:14
+ * @Date: 2020-09-02 14:50:14
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-31 20:17:26
- * @Description: animationMixer animationAction animationClip
+ * @LastEditTime: 2020-09-02 15:56:41
+ * @Description: 使用多个animationClip对象
  */
-// TODO: finish
 import React, { useRef, useEffect, ReactElement } from "react";
 import * as THREE from 'three';
 import * as dat from 'dat.gui';
-import { initRenderer, initCamera, initTrackballControls, initDefaultLighting } from '../../../util/util.js';
-import rainball from '../../../assets/textures/particles/raindrop-3.png';
-import { AnimationMixer, AnimationAction, Mesh } from 'three';
+import {
+  initRenderer,
+  initCamera,
+  initDefaultLighting,
+  initTrackballControls
+} from '../../../util/util.js';
+import { addClipActionFolder } from '../../../util/animationUtil';
 
 export default function MorphTargets(props: any): ReactElement {
 
@@ -25,124 +28,96 @@ export default function MorphTargets(props: any): ReactElement {
       // init renderer
       const renderer = initRenderer(wrap, undefined);
       // init camera
-      const camera = initCamera(wrap);
-      camera.position.set(0, 15, 70);
-      const trackballControls = initTrackballControls(camera, renderer);
-
-
-
-      
+      const camera = initCamera(wrap, undefined);
       // init scene
       const scene: any = new THREE.Scene();
+
+      scene.add(new THREE.AmbientLight(0x333333));
+      initDefaultLighting(scene);
       // position and point the camera to the center of the scene
+      camera.position.set(0, 15, 70);
+      // init trackballControls
+      const trackballControls = initTrackballControls(camera, renderer);
 
       const clock = new THREE.Clock();
 
-      let mixer: AnimationMixer;
-      let clipAction: AnimationAction;
-      let frameMesh: Mesh;
-      let mesh: Mesh;
+      let mixer: THREE.AnimationMixer;
+      let clipAction: any;
+      let clipAction2: any;
+      let animationClip: any;
+      let animationClip2: any;
 
-      initDefaultLighting(scene);
-
-      let cloud: any;
-
-      const createPointCloud = (
-        size: number,
-        transparent: boolean,
-        opacity: number,
-        sizeAttenuation: boolean,
-        color: any
-      ): void => {
-        const texture = new THREE.Texture();
-        const img = new Image();
-        img.src = rainball;
-        img.onload = function () {
-          const canvas = document.createElement('canvas');
-          const context = canvas.getContext('2d');
-          canvas.height = 128;
-          canvas.width = 128;
-          if (context) {
-            context.drawImage(img, 0, 0, 128, 128, 0, 0, 128, 128);
-          }
-          texture.image = canvas;
-          texture.format = THREE.RGBAFormat;
-          texture.needsUpdate = true;
-        }
-        const geom = new THREE.Geometry();
-
-        const material = new THREE.PointsMaterial({
-          size: size,
-          transparent: transparent,
-          opacity: opacity,
-          map: texture,
-          blending: THREE.AdditiveBlending,
-          sizeAttenuation: sizeAttenuation,
-          color: color
-        });
-        const range = 40;
-        for (let i = 0; i < 1500; i++) {
-          const particle: any = new THREE.Vector3(
-            Math.random() * range - range / 2,
-            Math.random() * range * 1.5,
-            // Math.random() * range - range / 2
-            1 + (i / 100)
-          )
-          particle.velocityY = 0.1 + Math.random() / 5;
-          particle.velocityX = (Math.random() - 0.5) / 3;
-          geom.vertices.push(particle);
-        }
-
-        cloud = new THREE.Points(geom, material);
-        cloud.sortParticles = true;
-        cloud.name = "particles1";
-        scene.add(cloud);
+      // control which keyframe to show
+      let controls1: any;
+      let controls2: any;
+      const mixerControls = {
+        time: 0,
+        timeScale: 1,
+        stopAllAction: function () { mixer.stopAllAction() },
       }
 
-      interface Controls {
-        // members of your "class" go here
-        size: number,
-        transparent: boolean,
-        opacity: number,
-        color: number,
-        sizeAttenuation: boolean,
-        redraw: any,
-        rotate: boolean
+      const enableControls = () => {
+        var mixerFolder = gui.addFolder("AnimationMixer")
+        mixerFolder.add(mixerControls, "time").listen()
+        mixerFolder.add(mixerControls, "timeScale", 0, 5).onChange(function (timeScale) { mixer.timeScale = timeScale });
+        mixerFolder.add(mixerControls, "stopAllAction").listen()
+
+        controls1 = addClipActionFolder("ClipAction 1", gui, clipAction, animationClip);
+        controls2 = addClipActionFolder("ClipAction 2", gui, clipAction2, animationClip2);
       }
-      const Controls = function (this: Controls) {
 
-        // the start geometry and material. Used as the base for the settings in the control UI
-        this.size = 3;
-        this.transparent = true;
-        this.opacity = 0.6;
-        this.color = 0xffffff;
-        this.sizeAttenuation = true;
+      const setupModel = (): void => {
+        // initial cube
+        const cubeGeometry = new THREE.BoxGeometry(2, 2, 2);
+        const cubeMaterial = new THREE.MeshLambertMaterial({ morphTargets: true, color: 0xff0000 });
 
-        this.redraw = function () {
-          scene.remove(scene.getObjectByName("particles1"));
-          createPointCloud(controls.size, controls.transparent, controls.opacity, controls.sizeAttenuation, controls.color);
-        };
-      } as any as { new(): Controls; };;
-      const controls = new Controls();
-      gui.add(controls, 'size', 0, 10).onChange(controls.redraw);
-      gui.add(controls, 'transparent').onChange(controls.redraw);
-      gui.add(controls, 'opacity', 0, 1).onChange(controls.redraw);
-      gui.addColor(controls, 'color').onChange(controls.redraw);
-      gui.add(controls, 'sizeAttenuation').onChange(controls.redraw);
+        // define morphtargets, we'll use the vertices from these geometries
+        const cubeTarget1 = new THREE.BoxGeometry(2, 20, 2);
+        const cubeTarget2 = new THREE.BoxGeometry(40, 2, 2);
 
-      controls.redraw();
+        // define morphtargets and compute the morphnormal
+        cubeGeometry.morphTargets[0] = { name: 't1', vertices: cubeGeometry.vertices };
+        cubeGeometry.morphTargets[1] = { name: 't2', vertices: cubeTarget2.vertices };
+        cubeGeometry.morphTargets[2] = { name: 't3', vertices: cubeTarget1.vertices };
+        cubeGeometry.computeMorphNormals();
 
+        const mesh = new THREE.Mesh(new THREE.BufferGeometry().fromGeometry(cubeGeometry), cubeMaterial);
+
+        // position the cube
+        mesh.position.x = 0;
+        mesh.position.y = 3;
+        mesh.position.z = 0;
+
+        // add the cube to the scene
+        scene.add(mesh);
+        mixer = new THREE.AnimationMixer(mesh);
+
+        animationClip = THREE.AnimationClip.CreateFromMorphTargetSequence('first', [cubeGeometry.morphTargets[0], cubeGeometry.morphTargets[1]], 1, false);
+        animationClip2 = THREE.AnimationClip.CreateFromMorphTargetSequence('second', [cubeGeometry.morphTargets[0], cubeGeometry.morphTargets[2]], 1, false);
+        clipAction = mixer.clipAction(animationClip).play();
+        clipAction2 = mixer.clipAction(animationClip2).play();
+
+        clipAction.setLoop(THREE.LoopRepeat);
+        clipAction2.setLoop(THREE.LoopRepeat);
+        // enable the controls
+        enableControls()
+      }
+      setupModel();
       const render = (): void => {
-        const vertices = cloud.geometry.vertices;
-        vertices.forEach(function (v: any) {
-          v.y = v.y - (v.velocityY);
-          v.x = v.x - (v.velocityX);
-          if (v.y <= 0) v.y = 60;
-          if (v.x <= -20 || v.x >= 20) v.velocityX = v.velocityX * -1;
-        });
-        cloud.geometry.verticesNeedUpdate = true;
-        animationId = requestAnimationFrame(render);
-        renderer.render(scene, camera);
+        const delta = clock.getDelta();
+        trackballControls.update();
+        requestAnimationFrame(render);
+        renderer.render(scene, camera)
+
+        if (mixer && clipAction) {
+          mixer.update(delta);
+          controls1.time = mixer.time;
+          controls1.effectiveTimeScale = clipAction.getEffectiveTimeScale();
+          controls1.effectiveWeight = clipAction.getEffectiveWeight();
+          controls2.time = mixer.time;
+          controls2.effectiveTimeScale = clipAction.getEffectiveTimeScale();
+          controls2.effectiveWeight = clipAction.getEffectiveWeight();
+        }
       }
       render();
     }
@@ -155,3 +130,4 @@ export default function MorphTargets(props: any): ReactElement {
   return <div ref={wrapRef} className="gl-wrapper"></div>;
 
 }
+

@@ -12,7 +12,7 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import chroma from 'chroma-js';
 import { FlyControls } from 'three/examples/jsm/controls/FlyControls';
 import { initCamera, initRenderer, initDefaultLighting } from '../../../util/util.js';
-import setRandomColors from '../../../util/setRandomColors';
+import { setRandomColors } from '../../../util/animationUtil';
 
 export default function FlyControl(props: any): ReactElement {
 

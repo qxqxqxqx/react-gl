@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-19 13:48:04
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-31 15:51:32
+ * @LastEditTime: 2020-09-02 16:45:33
  * @Description: 路由配置文件
  */
 import App from '../views/app/App';
@@ -64,6 +64,8 @@ import TrackballControls from '../views/home/animation/TrackballControls';
 import FlyControl from '../views/home/animation/FlyControl';
 import FirstPersonControl from '../views/home/animation/FirstPersonControl';
 import OrbitControl from '../views/home/animation/OrbitControl';
+import Horse from '../views/home/animation/Horse';
+import MorphTargets from '../views/home/animation/MorphTargets';
 
 const appRoute = {
   component: App,
@@ -260,7 +262,9 @@ export const homeAnimationRoute = {
     {component: TrackballControls, path: '/home/animation/trackballControls', exact: true, name: TrackballControls.name},
     {component: FlyControl, path: '/home/animation/flyControl', exact: true, name: FlyControl.name},
     {component: FirstPersonControl, path: '/home/animation/firstPersonControl', exact: true, name: FirstPersonControl.name},
-    {component: OrbitControl, path: '/home/animation/orbitControl', exact: true, name: OrbitControl.name}
+    {component: OrbitControl, path: '/home/animation/orbitControl', exact: true, name: OrbitControl.name},
+    {component: Horse, path: '/home/animation/horse', exact: true, name: Horse.name},
+    {component: MorphTargets, path: '/home/animation/morphTargets', exact: true, name: MorphTargets.name},
   ],
 };
 
