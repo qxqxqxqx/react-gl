@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-09-02 15:27:56
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-09-03 14:24:50
+ * @LastEditTime: 2020-09-03 15:09:13
  * @Description: 动画工具函数
  */
 import * as THREE from 'three';
@@ -119,7 +119,7 @@ export const setRandomColors = (object: any, scale: any): void => {
   }
 };
 
-export const initBones = (geometry: any) => {
+export const initBones = (geometry: any): THREE.Bone[] => {
   let bones = [];
   if (geometry && geometry.bones !== undefined) {
     // first, create array of 'Bone' objects from geometry data

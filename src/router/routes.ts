@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-19 13:48:04
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-09-02 17:45:33
+ * @LastEditTime: 2020-09-03 18:29:31
  * @Description: 路由配置文件
  */
 import App from '../views/app/App';
@@ -67,6 +67,9 @@ import OrbitControl from '../views/home/animation/OrbitControl';
 import Horse from '../views/home/animation/Horse';
 import MorphTargets from '../views/home/animation/MorphTargets';
 import Bones from '../views/home/animation/Bones';
+import AniMixer from '../views/home/animation/AniMixer';
+import ColladaModel from '../views/home/animation/ColladaModel';
+import MD2Model from '../views/home/animation/MD2Model';
 
 const appRoute = {
   component: App,
@@ -267,6 +270,9 @@ export const homeAnimationRoute = {
     {component: Horse, path: '/home/animation/horse', exact: true, name: Horse.name},
     {component: MorphTargets, path: '/home/animation/morphTargets', exact: true, name: MorphTargets.name},
     {component: Bones, path: '/home/animation/bones', exact: true, name: Bones.name},
+    {component: AniMixer, path: '/home/animation/aniMixer', exact: true, name: AniMixer.name},
+    {component: ColladaModel, path: '/home/animation/colladaModel', exact: true, name: ColladaModel.name},
+    {component: MD2Model, path: '/home/animation/mD2Model', exact: true, name: MD2Model.name},
   ],
 };
 

@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-09-02 17:33:12
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-09-03 15:03:45
+ * @LastEditTime: 2020-09-03 16:34:50
  * @Description: 骨骼动画
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -40,8 +40,6 @@ export default function Bones(props: any): ReactElement {
       camera.position.set(0, 15, 70);
       // init trackballControls
       const trackballControls = initTrackballControls(camera, renderer);
-
-      const clock = new THREE.Clock();
 
       const loader = new LegacyJSONLoader();
       let mesh: THREE.SkinnedMesh;

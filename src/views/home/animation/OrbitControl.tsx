@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-31 15:59:36
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-31 17:19:58
+ * @LastEditTime: 2020-09-03 16:57:25
  * @Description: 轨道控制器
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -50,7 +50,8 @@ export default function OrbitControl(props: any): ReactElement {
       })
 
       Promise.all([planetPromise, normalPromise]).then(res => {
-        const [planetTexture, normalTexture] = res;
+        // const [planetTexture, normalTexture] = res;
+        const [planetTexture] = res;
         const planetMaterial = new THREE.MeshLambertMaterial({ map: planetTexture });
         scene.add(new THREE.Mesh(new THREE.SphereGeometry(20, 40, 40), planetMaterial))
       }).catch(err => {
