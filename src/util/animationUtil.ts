@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-09-02 15:27:56
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-09-02 16:00:37
+ * @LastEditTime: 2020-09-03 14:24:50
  * @Description: 动画工具函数
  */
 import * as THREE from 'three';
@@ -11,7 +11,7 @@ import * as dat from 'dat.gui';
 
 /**
  * Adds a folder to the provided dat.gui to control an animation clip
- * 
+ *
  * @param {*} folderName name of the folder to add
  * @param {*} gui dat.gui to add it to
  * @param {*} clipAction clipAction to control
@@ -89,7 +89,7 @@ export const addClipActionFolder = (folderName: string, gui: dat.GUI, clipAction
   return actionControls;
 };
 
-export const setRandomColors = (object: any, scale: any):void => {
+export const setRandomColors = (object: any, scale: any): void => {
   const children = object.children;
   if (children && children.length > 0) {
     children.forEach(function (e: any) {
@@ -117,4 +117,41 @@ export const setRandomColors = (object: any, scale: any):void => {
       }
     }
   }
+};
+
+export const initBones = (geometry: any) => {
+  let bones = [];
+  if (geometry && geometry.bones !== undefined) {
+    // first, create array of 'Bone' objects from geometry data
+
+    for (let i = 0, il = geometry.bones.length; i < il; i++) {
+      const gbone = geometry.bones[i];
+
+      // create new 'Bone' object
+
+      const bone = new THREE.Bone();
+      bones.push(bone);
+
+      // apply values
+
+      bone.name = gbone.name;
+      bone.position.fromArray(gbone.pos);
+      bone.quaternion.fromArray(gbone.rotq);
+      if (gbone.scl !== undefined) bone.scale.fromArray(gbone.scl);
+    }
+
+    // second, create bone hierarchy
+
+    for (let i = 0, il = geometry.bones.length; i < il; i++) {
+      const gbone = geometry.bones[i];
+
+      if (gbone.parent !== -1 && gbone.parent !== null && bones[gbone.parent] !== undefined) {
+        // subsequent bones in the hierarchy
+
+        bones[gbone.parent].add(bones[i]);
+      }
+    }
+  }
+
+  return bones;
 };
