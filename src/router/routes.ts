@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-19 13:48:04
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-09-03 18:29:31
+ * @LastEditTime: 2020-09-03 20:15:18
  * @Description: 路由配置文件
  */
 import App from '../views/app/App';
@@ -70,6 +70,9 @@ import Bones from '../views/home/animation/Bones';
 import AniMixer from '../views/home/animation/AniMixer';
 import ColladaModel from '../views/home/animation/ColladaModel';
 import MD2Model from '../views/home/animation/MD2Model';
+import GltfModel from '../views/home/animation/GltfModel';
+import FBXModel from '../views/home/animation/FBXModel';
+import XModel from '../views/home/animation/XModel';
 
 const appRoute = {
   component: App,
@@ -273,6 +276,9 @@ export const homeAnimationRoute = {
     {component: AniMixer, path: '/home/animation/aniMixer', exact: true, name: AniMixer.name},
     {component: ColladaModel, path: '/home/animation/colladaModel', exact: true, name: ColladaModel.name},
     {component: MD2Model, path: '/home/animation/mD2Model', exact: true, name: MD2Model.name},
+    {component: GltfModel, path: '/home/animation/gltfModel', exact: true, name: GltfModel.name},
+    {component: FBXModel, path: '/home/animation/FBXModel', exact: true, name: FBXModel.name},
+    {component: XModel, path: '/home/animation/XModel', exact: true, name: XModel.name}
   ],
 };
 
