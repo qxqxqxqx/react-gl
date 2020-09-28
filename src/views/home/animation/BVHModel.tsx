@@ -1,15 +1,15 @@
 /*
  * @Author: qiaoxin
  * @Email: qiaoxinfc@gmail.com
- * @Date: 2020-09-03 20:05:17
+ * @Date: 2020-09-04 14:12:03
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-09-04 14:10:12
- * @Description: 加载directx模型
+ * @LastEditTime: 2020-09-04 16:14:26
+ * @Description: bvh model 动画
  */
 import React, { useRef, useEffect, ReactElement } from "react";
 import * as THREE from 'three';
 import * as dat from 'dat.gui';
-// import { XLoader } from 'three/examples/jsm/loaders/XLoader';
+import { BVHLoader } from 'three/examples/jsm/loaders/BVHLoader';
 import {
   initRenderer,
   initCamera,
@@ -17,9 +17,8 @@ import {
   initTrackballControls
 } from '../../../util/util.js';
 import { addClipActionFolder } from '../../../util/animationUtil';
-import { XLoader } from '../../../util/XLoader';
 
-export default function XModel(props: any): ReactElement {
+export default function BVHModel(props: any): ReactElement {
 
   const wrapRef = useRef(null);
   useEffect(() => {
@@ -37,7 +36,7 @@ export default function XModel(props: any): ReactElement {
       scene.add(new THREE.AmbientLight(0x333333));
       initDefaultLighting(scene);
       // position and point the camera to the center of the scene
-      camera.position.set(0, 10, 70);
+      camera.position.set(0, 0, -300);
       // init trackballControls
       const trackballControls = initTrackballControls(camera, renderer);
 
@@ -45,9 +44,7 @@ export default function XModel(props: any): ReactElement {
 
       let mixer: any;
       let clipAction: any;
-      let animationClip: any;
       let controls: any;
-
 
       // control which keyframe to show
       const mixerControls = {
@@ -56,40 +53,34 @@ export default function XModel(props: any): ReactElement {
         stopAllAction: function () { mixer.stopAllAction() },
       }
 
-      const manager = new THREE.LoadingManager();
-      const loader = new XLoader(manager);
-      const animLoader:any = new XLoader(manager);
+      const loader = new BVHLoader();;
       // we could also queue this or use promises
-      loader.load([`${process.env.PUBLIC_URL}/models/x/SSR06_model.x`], function (result) {
-        const mesh:any = result.models[0];
-        animLoader.load([`${process.env.PUBLIC_URL}/models/x/stand.x`, { putPos: false, putScl: false }], function (anim:any) {
-          // assign animation to mesh
-          animLoader.assignAnimation(mesh);
-          // at this point we've got a normal mesh, and can get the mixer and clipactio
-          // animationClip = anim.animations[0];
-          mixer = mesh.animationMixer;
-          // clipAction accept string parameter
-          clipAction = mixer.clipAction('stand').play();
-          animationClip = clipAction.getClip();
-          const mixerFolder = gui.addFolder("AnimationMixer")
-          mixerFolder.add(mixerControls, "time").listen()
-          mixerFolder.add(mixerControls, "timeScale", 0, 20).onChange(function (timeScale) { mixer.timeScale = timeScale });
-          mixerFolder.add(mixerControls, "stopAllAction").listen()
+      loader.load(`${process.env.PUBLIC_URL}/models/amelia-dance/DanceNightClub7_t1.bvh`, function (result) {
+        const skeletonHelper: any = new THREE.SkeletonHelper(result.skeleton.bones[0]);
+        skeletonHelper.skeleton = result.skeleton; // allow animation mixer to bind to SkeletonHelper directly
+        const boneContainer = new THREE.Object3D();
+        boneContainer.translateY(-70);
+        boneContainer.translateX(-100);
+        boneContainer.add(result.skeleton.bones[0]);
+        scene.add(skeletonHelper);
+        scene.add(boneContainer);
 
-          controls = addClipActionFolder("ClipAction", gui, clipAction, animationClip);
+        mixer = new THREE.AnimationMixer(skeletonHelper);
+        clipAction = mixer.clipAction(result.clip).setEffectiveWeight(1.0).play();
 
-          mesh.translateY(-6);
-          // mesh.rotateY(-0.7 * Math.PI);
-          scene.add(mesh);
-        });
+        const mixerFolder = gui.addFolder("AnimationMixer");
+        mixerFolder.add(mixerControls, "time").listen();
+        mixerFolder.add(mixerControls, "timeScale", 0, 5).onChange(function (timeScale) { mixer.timeScale = timeScale });
+        mixerFolder.add(mixerControls, "stopAllAction").listen();
+        controls = addClipActionFolder("ClipAction", gui, clipAction, result.clip);
+
       });
 
       const render = (): void => {
         const delta = clock.getDelta();
         trackballControls.update();
         requestAnimationFrame(render);
-        renderer.render(scene, camera)
-
+        renderer.render(scene, camera);
         if (mixer && clipAction && controls) {
           mixer.update(delta);
           controls.time = mixer.time;
@@ -108,6 +99,7 @@ export default function XModel(props: any): ReactElement {
   return <div ref={wrapRef} className="gl-wrapper"></div>;
 
 }
+
 
 
 

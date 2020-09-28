@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-26 15:33:57
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-26 17:01:35
+ * @LastEditTime: 2020-09-28 17:15:28
  * @Description: 选择对象
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -19,8 +19,8 @@ import {
 
 export default function SelectObjects(params: any): ReactElement {
   const wrapRef = useRef(null);
-  let handleMouseDown = (e:any):void => {}
-  let handleMouseMove = (e:any):void => {}
+  const handleMouseDown = useRef((e:any):void => {})
+  const handleMouseMove = useRef((e:any):void => {})
   useEffect(() => {
     const gui = new dat.GUI();
     let animationId: number | null = null;
@@ -132,7 +132,7 @@ export default function SelectObjects(params: any): ReactElement {
 
     renderScene();
 
-    handleMouseDown = (e: any): void => {
+    handleMouseDown.current = (e: any): void => {
       e.persist();
       const wrap:any = wrapRef.current;
       const { top, left, width, height } = wrap.getBoundingClientRect();
@@ -151,7 +151,7 @@ export default function SelectObjects(params: any): ReactElement {
       }
     }
 
-    handleMouseMove = (e: any): void => {
+    handleMouseMove.current = (e: any): void => {
       if (controls.showRay) {
         const wrap: any = wrapRef.current;
         const { top, left, width, height } = wrap.getBoundingClientRect();
@@ -188,7 +188,7 @@ export default function SelectObjects(params: any): ReactElement {
       animationId && cancelAnimationFrame(animationId);
     };
   }, []);
-  return <div ref={wrapRef} className="gl-wrapper" onClick={e => handleMouseDown(e)} onMouseMove={e => handleMouseMove(e)}></div>;
+  return <div ref={wrapRef} className="gl-wrapper" onClick={e => handleMouseDown.current(e)} onMouseMove={e => handleMouseMove.current(e)}></div>;
 
 }
 

@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-19 13:48:04
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-09-03 20:15:18
+ * @LastEditTime: 2020-09-04 14:17:38
  * @Description: 路由配置文件
  */
 import App from '../views/app/App';
@@ -73,6 +73,7 @@ import MD2Model from '../views/home/animation/MD2Model';
 import GltfModel from '../views/home/animation/GltfModel';
 import FBXModel from '../views/home/animation/FBXModel';
 import XModel from '../views/home/animation/XModel';
+import BVHModel from '../views/home/animation/BVHModel';
 
 const appRoute = {
   component: App,
@@ -278,7 +279,8 @@ export const homeAnimationRoute = {
     {component: MD2Model, path: '/home/animation/mD2Model', exact: true, name: MD2Model.name},
     {component: GltfModel, path: '/home/animation/gltfModel', exact: true, name: GltfModel.name},
     {component: FBXModel, path: '/home/animation/FBXModel', exact: true, name: FBXModel.name},
-    {component: XModel, path: '/home/animation/XModel', exact: true, name: XModel.name}
+    {component: XModel, path: '/home/animation/XModel', exact: true, name: XModel.name},
+    {component: BVHModel, path: '/home/animation/BVHModel', exact: true, name: BVHModel.name},
   ],
 };
 
