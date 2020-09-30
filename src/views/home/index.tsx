@@ -29,7 +29,7 @@ export default function Home(props: any): JSX.Element {
     <Layout className="layout">
       <Header className="site-header">
         <div className="logo">React Webgl</div>
-        <Menu theme="dark" mode="vertical" selectedKeys={[pathname]} onClick={i => handleMenuClick(i.key)}>
+        <Menu theme="dark" mode="horizontal" selectedKeys={[pathname]} onClick={i => handleMenuClick(i.key)}>
           {
             routes.map(subRoute => (
               <SubMenu icon={<SettingOutlined />} key={subRoute.path} title={subRoute.title}>

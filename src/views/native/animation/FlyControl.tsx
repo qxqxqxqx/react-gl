@@ -3,7 +3,7 @@
  * @Email: qiaoxinfc@gmail.com
  * @Date: 2020-08-31 15:26:41
  * @LastEditors: qiaoxin
- * @LastEditTime: 2020-08-31 15:49:14
+ * @LastEditTime: 2020-09-30 14:27:34
  * @Description: 飞行控制器
  */
 import React, { useRef, useEffect, ReactElement } from "react";
@@ -33,7 +33,6 @@ export default function FlyControl(props: any): ReactElement {
 
       const flyControls = new FlyControls(camera, renderer.domElement);
       flyControls.movementSpeed = 25;
-      console.log(wrap)
       flyControls.domElement = renderer.domElement;
       flyControls.rollSpeed = Math.PI / 24;
       flyControls.autoForward = true;
