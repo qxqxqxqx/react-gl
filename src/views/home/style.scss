@@ -1,8 +1,17 @@
+.site-header {
+  line-height: 64px;
+  .ant-menu {
+    height: 64px;
+    padding: 8px 0;
+  }
+}
+
 .site-layout-content {
   background: #fff;
   min-height: 800px;
   height: calc(100% - 54px);
 }
+
 .logo {
   width: 120px;
   height: 31px;

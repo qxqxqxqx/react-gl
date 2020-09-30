@@ -9,8 +9,8 @@ const { SubMenu } = Menu;
 const { Header, Content, Footer } = Layout;
 
 export default function Home(props: any): JSX.Element {
-  const {route, history} = props;
-  const handleMenuClick = (path: any):void => {
+  const { route, history } = props;
+  const handleMenuClick = (path: any): void => {
     history.replace(path)
   }
 
@@ -24,18 +24,24 @@ export default function Home(props: any): JSX.Element {
   const routes: Routes[] = route.routes;
   const pathname: string = history.location.pathname;
   const pathArray: string[] = pathname.split('/');
-  
+
   return (
     <Layout className="layout">
-      <Header>
+      <Header className="site-header">
         <div className="logo">React Webgl</div>
-        <Menu theme="dark" mode="horizontal" selectedKeys={[pathname]} onClick={i => handleMenuClick(i.key)}>
+        <Menu theme="dark" mode="vertical" selectedKeys={[pathname]} onClick={i => handleMenuClick(i.key)}>
           {
-            routes.map(routeItem => (
-              <SubMenu icon={<SettingOutlined />} key={routeItem.path} title={routeItem.title}>
+            routes.map(subRoute => (
+              <SubMenu icon={<SettingOutlined />} key={subRoute.path} title={subRoute.title}>
                 {
-                  routeItem.routes && routeItem.routes.map(r => (
-                    <Menu.Item key={r.path}>{r.name}</Menu.Item>
+                  subRoute.routes && subRoute.routes.map(routeItem => (
+                    <Menu.ItemGroup key={routeItem.path} title={routeItem.title}>
+                      {
+                        routeItem.routes && routeItem.routes.map(r => (
+                          <Menu.Item key={r.path}>{r.name}</Menu.Item>
+                        ))
+                      }
+                    </Menu.ItemGroup>
                   ))
                 }
               </SubMenu>

@@ -26,6 +26,7 @@
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-three-fiber": "^5.0.1",
     "three": "^0.119.0",
     "typescript": "~3.7.2",
     "utility-types": "^3.10.0"
