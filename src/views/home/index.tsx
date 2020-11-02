@@ -3,7 +3,7 @@ import { renderRoutes } from "react-router-config";
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 
-import './style.scss'
+import './style.less'
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer } = Layout;

@@ -20,7 +20,6 @@
     "antd": "^4.5.1",
     "chroma-js": "^2.1.0",
     "dat.gui": "^0.7.7",
-    "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-config": "^5.1.1",
@@ -55,6 +54,8 @@
   "devDependencies": {
     "customize-cra": "^1.0.0",
     "gltf-webpack-loader": "^1.0.6",
+    "less": "^3.12.2",
+    "less-loader": "^7.0.2",
     "react-app-rewired": "^2.1.6"
   }
 }
